@@ -21,6 +21,9 @@ status_t ADT_socket_init(socket_t *adt_socket, socket_type_t type) {
     hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = (type == SERVER) ? AI_PASSIVE : CLIENT;
+    hints.ai_canonname = NULL;
+    hints.ai_addr = NULL;
+    hints.ai_next = NULL;
 
     if ((res = getaddrinfo(adt_socket->host, adt_socket->service, &hints, &(adt_socket->addrinfo_res))) != GETADDRINFO_SUCCESSFUL) {
         perror(gai_strerror(res));
@@ -88,6 +91,7 @@ status_t ADT_socket_bind_and_listen(socket_t *adt_socket) {
 
     res = bind(adt_socket->file_descriptor, adt_socket->addrinfo_res->ai_addr, adt_socket->addrinfo_res->ai_addrlen);
     freeaddrinfo(adt_socket->addrinfo_res);
+
     if (res == ERROR_SOCKET) {
         printf("Error: %s\n", strerror(errno));
         close(adt_socket->file_descriptor);
