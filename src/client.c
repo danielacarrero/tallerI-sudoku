@@ -33,7 +33,10 @@ void process_input(socket_t *socket) {
     bool exit = false;
 
     while(!exit){
-        fgets(buf, CMD_MAX_INPUT_SIZE, stdin);
+        if(fgets(buf, CMD_MAX_INPUT_SIZE, stdin) == NULL){
+            fprintf(stderr, "%s\n", "Error al leer de consola.");
+            return;
+        }
 
         if(!strncmp(CMD_EXIT, buf, strlen(CMD_EXIT))){
             exit = true;
