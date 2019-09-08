@@ -78,6 +78,24 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_socket.c">
+			<Option target="tp1_sudoku"/>
+		</Unit>
+		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_socket.h">
+			<Option target="tp1_sudoku"/>
+		</Unit>
+		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_sudoku.c">
+			<Option target="tp1_sudoku"/>
+		</Unit>
+		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_sudoku.h">
+			<Option target="tp1_sudoku"/>
+		</Unit>
+		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/client.c">
+			<Option target="tp1_sudoku"/>
+		</Unit>
+		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/client.h">
+			<Option target="tp1_sudoku"/>
+		</Unit>
 		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/errors.c">
 			<Option target="tp1_sudoku"/>
 		</Unit>
@@ -90,10 +108,10 @@
 		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/main.h">
 			<Option target="tp1_sudoku"/>
 		</Unit>
-		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/setup.c">
+		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/server.c">
 			<Option target="tp1_sudoku"/>
 		</Unit>
-		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/setup.h">
+		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/server.h">
 			<Option target="tp1_sudoku"/>
 		</Unit>
 		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/types.h">

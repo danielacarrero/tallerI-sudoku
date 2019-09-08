@@ -5,6 +5,7 @@
 #include <netdb.h>
 #include <stdbool.h>
 #include <errno.h>
+#include <stdlib.h>
 
 #include "adt_socket.h"
 
@@ -31,13 +32,12 @@ status_t ADT_socket_init(socket_t *adt_socket, socket_type_t type) {
 
 status_t ADT_socket_destroy(socket_t *adt_socket) {
     if (adt_socket == NULL) {
-        fprintf(stderr, "%s\n", "null pointer al destruir socket");
         return ERROR_NULL_POINTER;
     }
 
     shutdown(adt_socket->file_descriptor, SHUT_RDWR);
     close(adt_socket->file_descriptor);
-    fprintf(stdout, "%s%d\n", "fd cerrado: ", adt_socket->file_descriptor);
+    fprintf(stdout, "%s%d\n", "File Descriptor cerrado: ", adt_socket->file_descriptor);
     return OK;
 }
 
@@ -62,7 +62,7 @@ status_t ADT_socket_connect(socket_t *adt_socket) {
             printf("Error: %s\n", strerror(errno));
             close(fd);
         } else {
-            fprintf(stdout, "Se conectó!!! :D\n");
+            fprintf(stdout, "Conectado.\n");
             adt_socket->file_descriptor = fd;
             connected = true;
         }
@@ -103,28 +103,12 @@ status_t ADT_socket_bind_and_listen(socket_t *adt_socket) {
 
     return OK;
 }
-
+/*
 status_t ADT_socket_accept(socket_t *adt_socket) {
-    bool accepting = true;
-    int peer_fd = 0;
 
-    while (accepting) {
-        peer_fd = accept(adt_socket->file_descriptor, NULL, NULL);
-        if (peer_fd == INVALID_FD) {
-            printf("Error: %s\n", strerror(errno));
-            ADT_socket_destroy(adt_socket);
-            return ERROR_ACCEPTING_SOCKET_CONNECTION;
-        } else {
-            fprintf(stdout, "Nuevo cliente conectado!!\n");
-
-            shutdown(peer_fd, SHUT_RDWR);
-            close(peer_fd);
-            //accepting = false;
-        }
-    }
 
     return OK;
-}
+}*/
 
 status_t ADT_socket_send(socket_t *adt_socket, const char *buffer, size_t length) {
     int sent = 0;
@@ -143,31 +127,60 @@ status_t ADT_socket_send(socket_t *adt_socket, const char *buffer, size_t length
             return ERROR_SOCKET_SENDING;
         } else {
             sent += res;
-            fprintf(stdout, "Enviando %i/%zu bytes: \n", res, length);
+            fprintf(stdout, "Enviando %i/%zu bytes\n", res, length);
         }
     }
 
     return OK;
 }
 
-status_t ADT_socket_receive(socket_t *adt_socket, char *buffer, size_t length) {
+status_t ADT_socket_receive(socket_t *adt_socket, int peer_fd, int *res, char *buffer, size_t length) {
     int received = 0;
-    int res = 0;
+    int buff_len = 0;
+    status_t st = OK;
+
+    memset(buffer, 0, length);
 
     if (adt_socket == NULL || buffer == NULL) {
         return ERROR_NULL_POINTER;
     }
 
     while(received < length) {
-        res = recv(adt_socket->file_descriptor, &buffer[received], length - received, 0);
-        if (res == CLOSED_SOCKET) {
-            return ERROR_CLOSED_SOCKET;
-        } else if (res == ERROR_SOCKET) {
-            return ERROR_SOCKET_RECEIVING;
+        *res = recv(peer_fd, &buffer[received], length - received, 0);
+
+        if (*res == CLOSED_SOCKET) {
+            shutdown(peer_fd, SHUT_RDWR);
+            close(peer_fd);
+            st = ERROR_CLOSED_SOCKET;
+            break;
+        } else if (*res == ERROR_SOCKET) {
+            printf("Error: %s\n", strerror(errno));
+            shutdown(peer_fd, SHUT_RDWR);
+            close(peer_fd);
+            st = ERROR_SOCKET_RECEIVING;
+            break;
         } else {
-            received += res;
-            fprintf(stdout, "Recibiendo %i/%zu bytes: \n", res, length);
+            buff_len = atoi(buffer);
+            if (buff_len == 0) {
+                printf("Recibiendo 0 bytes.\n");
+                break;
+            }
+
+            fprintf(stdout, "Recibiendo %i/%zu bytes\n", *res, length);
+            received += *res;
         }
+    }
+
+    return st;
+}
+
+status_t ADT_socket_accept(socket_t *adt_socket, int *peer_fd) {
+    *peer_fd = accept(adt_socket->file_descriptor, NULL, NULL);
+
+    if (*peer_fd == INVALID_FD) {
+        printf("Error: %s\n", strerror(errno));
+        ADT_socket_destroy(adt_socket);
+        return ERROR_ACCEPTING_SOCKET_CONNECTION;
     }
 
     return OK;

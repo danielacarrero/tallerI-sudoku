@@ -4,9 +4,12 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
+  "/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_socket.c" "/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/src/adt_socket.c.o"
+  "/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_sudoku.c" "/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/src/adt_sudoku.c.o"
+  "/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/client.c" "/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/src/client.c.o"
   "/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/errors.c" "/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/src/errors.c.o"
   "/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/main.c" "/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/src/main.c.o"
-  "/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/setup.c" "/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/src/setup.c.o"
+  "/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/server.c" "/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/src/server.c.o"
   )
 set(CMAKE_C_COMPILER_ID "AppleClang")
 

@@ -83,34 +83,79 @@ CMakeFiles/tp1_sudoku.dir/src/errors.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/tp1_sudoku.dir/src/errors.c.s"
 	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/errors.c -o CMakeFiles/tp1_sudoku.dir/src/errors.c.s
 
-CMakeFiles/tp1_sudoku.dir/src/setup.c.o: CMakeFiles/tp1_sudoku.dir/flags.make
-CMakeFiles/tp1_sudoku.dir/src/setup.c.o: ../src/setup.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/tp1_sudoku.dir/src/setup.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/tp1_sudoku.dir/src/setup.c.o   -c /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/setup.c
+CMakeFiles/tp1_sudoku.dir/src/adt_socket.c.o: CMakeFiles/tp1_sudoku.dir/flags.make
+CMakeFiles/tp1_sudoku.dir/src/adt_socket.c.o: ../src/adt_socket.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/tp1_sudoku.dir/src/adt_socket.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/tp1_sudoku.dir/src/adt_socket.c.o   -c /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_socket.c
 
-CMakeFiles/tp1_sudoku.dir/src/setup.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/tp1_sudoku.dir/src/setup.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/setup.c > CMakeFiles/tp1_sudoku.dir/src/setup.c.i
+CMakeFiles/tp1_sudoku.dir/src/adt_socket.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/tp1_sudoku.dir/src/adt_socket.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_socket.c > CMakeFiles/tp1_sudoku.dir/src/adt_socket.c.i
 
-CMakeFiles/tp1_sudoku.dir/src/setup.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/tp1_sudoku.dir/src/setup.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/setup.c -o CMakeFiles/tp1_sudoku.dir/src/setup.c.s
+CMakeFiles/tp1_sudoku.dir/src/adt_socket.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/tp1_sudoku.dir/src/adt_socket.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_socket.c -o CMakeFiles/tp1_sudoku.dir/src/adt_socket.c.s
+
+CMakeFiles/tp1_sudoku.dir/src/client.c.o: CMakeFiles/tp1_sudoku.dir/flags.make
+CMakeFiles/tp1_sudoku.dir/src/client.c.o: ../src/client.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/tp1_sudoku.dir/src/client.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/tp1_sudoku.dir/src/client.c.o   -c /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/client.c
+
+CMakeFiles/tp1_sudoku.dir/src/client.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/tp1_sudoku.dir/src/client.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/client.c > CMakeFiles/tp1_sudoku.dir/src/client.c.i
+
+CMakeFiles/tp1_sudoku.dir/src/client.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/tp1_sudoku.dir/src/client.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/client.c -o CMakeFiles/tp1_sudoku.dir/src/client.c.s
+
+CMakeFiles/tp1_sudoku.dir/src/server.c.o: CMakeFiles/tp1_sudoku.dir/flags.make
+CMakeFiles/tp1_sudoku.dir/src/server.c.o: ../src/server.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/tp1_sudoku.dir/src/server.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/tp1_sudoku.dir/src/server.c.o   -c /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/server.c
+
+CMakeFiles/tp1_sudoku.dir/src/server.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/tp1_sudoku.dir/src/server.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/server.c > CMakeFiles/tp1_sudoku.dir/src/server.c.i
+
+CMakeFiles/tp1_sudoku.dir/src/server.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/tp1_sudoku.dir/src/server.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/server.c -o CMakeFiles/tp1_sudoku.dir/src/server.c.s
+
+CMakeFiles/tp1_sudoku.dir/src/adt_sudoku.c.o: CMakeFiles/tp1_sudoku.dir/flags.make
+CMakeFiles/tp1_sudoku.dir/src/adt_sudoku.c.o: ../src/adt_sudoku.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/tp1_sudoku.dir/src/adt_sudoku.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/tp1_sudoku.dir/src/adt_sudoku.c.o   -c /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_sudoku.c
+
+CMakeFiles/tp1_sudoku.dir/src/adt_sudoku.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/tp1_sudoku.dir/src/adt_sudoku.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_sudoku.c > CMakeFiles/tp1_sudoku.dir/src/adt_sudoku.c.i
+
+CMakeFiles/tp1_sudoku.dir/src/adt_sudoku.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/tp1_sudoku.dir/src/adt_sudoku.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_sudoku.c -o CMakeFiles/tp1_sudoku.dir/src/adt_sudoku.c.s
 
 # Object files for target tp1_sudoku
 tp1_sudoku_OBJECTS = \
 "CMakeFiles/tp1_sudoku.dir/src/main.c.o" \
 "CMakeFiles/tp1_sudoku.dir/src/errors.c.o" \
-"CMakeFiles/tp1_sudoku.dir/src/setup.c.o"
+"CMakeFiles/tp1_sudoku.dir/src/adt_socket.c.o" \
+"CMakeFiles/tp1_sudoku.dir/src/client.c.o" \
+"CMakeFiles/tp1_sudoku.dir/src/server.c.o" \
+"CMakeFiles/tp1_sudoku.dir/src/adt_sudoku.c.o"
 
 # External object files for target tp1_sudoku
 tp1_sudoku_EXTERNAL_OBJECTS =
 
 tp1_sudoku: CMakeFiles/tp1_sudoku.dir/src/main.c.o
 tp1_sudoku: CMakeFiles/tp1_sudoku.dir/src/errors.c.o
-tp1_sudoku: CMakeFiles/tp1_sudoku.dir/src/setup.c.o
+tp1_sudoku: CMakeFiles/tp1_sudoku.dir/src/adt_socket.c.o
+tp1_sudoku: CMakeFiles/tp1_sudoku.dir/src/client.c.o
+tp1_sudoku: CMakeFiles/tp1_sudoku.dir/src/server.c.o
+tp1_sudoku: CMakeFiles/tp1_sudoku.dir/src/adt_sudoku.c.o
 tp1_sudoku: CMakeFiles/tp1_sudoku.dir/build.make
 tp1_sudoku: CMakeFiles/tp1_sudoku.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable tp1_sudoku"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking C executable tp1_sudoku"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/tp1_sudoku.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

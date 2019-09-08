@@ -18,7 +18,7 @@ status_t init_client(const char *host, const char *service) {
         return st;
     }
 
-    process_input();
+    process_input(&socket);
 
     if ((st = ADT_socket_destroy(&socket)) != OK) {
         return st;
@@ -27,7 +27,7 @@ status_t init_client(const char *host, const char *service) {
     return OK;
 }
 
-void process_input() {
+void process_input(socket_t *socket) {
     fprintf(stderr, "%s\n", "Process user input!! ");
     char buf[CMD_MAX_INPUT_SIZE];
     bool exit = false;
@@ -35,10 +35,11 @@ void process_input() {
     while(!exit){
         fgets(buf, CMD_MAX_INPUT_SIZE, stdin);
 
-
-        if(strncmp(CMD_EXIT, buf, sizeof(CMD_EXIT))){
+        if(!strncmp(CMD_EXIT, buf, strlen(CMD_EXIT))){
             exit = true;
         }
+
+        ADT_socket_send(socket, buf, strlen(buf));
     }
 
     fprintf(stdout, "%s\n", buf);

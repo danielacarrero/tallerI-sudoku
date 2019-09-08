@@ -123,6 +123,87 @@ tp1_sudoku/fast:
 	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/build
 .PHONY : tp1_sudoku/fast
 
+src/adt_socket.o: src/adt_socket.c.o
+
+.PHONY : src/adt_socket.o
+
+# target to build an object file
+src/adt_socket.c.o:
+	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/adt_socket.c.o
+.PHONY : src/adt_socket.c.o
+
+src/adt_socket.i: src/adt_socket.c.i
+
+.PHONY : src/adt_socket.i
+
+# target to preprocess a source file
+src/adt_socket.c.i:
+	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/adt_socket.c.i
+.PHONY : src/adt_socket.c.i
+
+src/adt_socket.s: src/adt_socket.c.s
+
+.PHONY : src/adt_socket.s
+
+# target to generate assembly for a file
+src/adt_socket.c.s:
+	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/adt_socket.c.s
+.PHONY : src/adt_socket.c.s
+
+src/adt_sudoku.o: src/adt_sudoku.c.o
+
+.PHONY : src/adt_sudoku.o
+
+# target to build an object file
+src/adt_sudoku.c.o:
+	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/adt_sudoku.c.o
+.PHONY : src/adt_sudoku.c.o
+
+src/adt_sudoku.i: src/adt_sudoku.c.i
+
+.PHONY : src/adt_sudoku.i
+
+# target to preprocess a source file
+src/adt_sudoku.c.i:
+	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/adt_sudoku.c.i
+.PHONY : src/adt_sudoku.c.i
+
+src/adt_sudoku.s: src/adt_sudoku.c.s
+
+.PHONY : src/adt_sudoku.s
+
+# target to generate assembly for a file
+src/adt_sudoku.c.s:
+	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/adt_sudoku.c.s
+.PHONY : src/adt_sudoku.c.s
+
+src/client.o: src/client.c.o
+
+.PHONY : src/client.o
+
+# target to build an object file
+src/client.c.o:
+	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/client.c.o
+.PHONY : src/client.c.o
+
+src/client.i: src/client.c.i
+
+.PHONY : src/client.i
+
+# target to preprocess a source file
+src/client.c.i:
+	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/client.c.i
+.PHONY : src/client.c.i
+
+src/client.s: src/client.c.s
+
+.PHONY : src/client.s
+
+# target to generate assembly for a file
+src/client.c.s:
+	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/client.c.s
+.PHONY : src/client.c.s
+
 src/errors.o: src/errors.c.o
 
 .PHONY : src/errors.o
@@ -177,32 +258,32 @@ src/main.c.s:
 	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/main.c.s
 .PHONY : src/main.c.s
 
-src/setup.o: src/setup.c.o
+src/server.o: src/server.c.o
 
-.PHONY : src/setup.o
+.PHONY : src/server.o
 
 # target to build an object file
-src/setup.c.o:
-	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/setup.c.o
-.PHONY : src/setup.c.o
+src/server.c.o:
+	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/server.c.o
+.PHONY : src/server.c.o
 
-src/setup.i: src/setup.c.i
+src/server.i: src/server.c.i
 
-.PHONY : src/setup.i
+.PHONY : src/server.i
 
 # target to preprocess a source file
-src/setup.c.i:
-	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/setup.c.i
-.PHONY : src/setup.c.i
+src/server.c.i:
+	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/server.c.i
+.PHONY : src/server.c.i
 
-src/setup.s: src/setup.c.s
+src/server.s: src/server.c.s
 
-.PHONY : src/setup.s
+.PHONY : src/server.s
 
 # target to generate assembly for a file
-src/setup.c.s:
-	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/setup.c.s
-.PHONY : src/setup.c.s
+src/server.c.s:
+	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/server.c.s
+.PHONY : src/server.c.s
 
 # Help Target
 help:
@@ -213,15 +294,24 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... tp1_sudoku"
+	@echo "... src/adt_socket.o"
+	@echo "... src/adt_socket.i"
+	@echo "... src/adt_socket.s"
+	@echo "... src/adt_sudoku.o"
+	@echo "... src/adt_sudoku.i"
+	@echo "... src/adt_sudoku.s"
+	@echo "... src/client.o"
+	@echo "... src/client.i"
+	@echo "... src/client.s"
 	@echo "... src/errors.o"
 	@echo "... src/errors.i"
 	@echo "... src/errors.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/setup.o"
-	@echo "... src/setup.i"
-	@echo "... src/setup.s"
+	@echo "... src/server.o"
+	@echo "... src/server.i"
+	@echo "... src/server.s"
 .PHONY : help
 
 

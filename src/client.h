@@ -8,6 +8,6 @@
 #define CMD_EXIT "exit"
 
 status_t init_client(const char *host, const char *service);
-void process_input();
+void process_input(socket_t *socket);
 
 #endif
