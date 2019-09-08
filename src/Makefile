@@ -16,7 +16,7 @@ extension = c
 # toma todos los archivos con la extensión mencionada. Para especificar hay que
 # descomentar la línea (quitarle el '#' del principio).
 # NOTA: No poner cabeceras (.h).
-fuentes = main.c errors.c
+fuentes = main.c errors.c adt_socket.c server.c client.c
 
 # Si usa funciones de math.h, descomentar (quitar el '#' a) la siguiente línea.
 #math = si
