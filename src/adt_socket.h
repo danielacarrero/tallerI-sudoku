@@ -1,10 +1,10 @@
 #ifndef ADT_SOCKET__H
 #define ADT_SOCKET__H
 
+#define _POSIX_C_SOURCE 200112L
+
 #include <netdb.h>
 #include "types.h"
-
-#define _POSIX_C_SOURCE 200112L
 
 #define INVALID_FD -1
 #define GETADDRINFO_SUCCESSFUL 0
