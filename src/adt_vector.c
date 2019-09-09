@@ -16,6 +16,7 @@ status_t ADT_vector_create(vector_t  **p) {
         return ERROR_OUT_OF_MEMORY;
     }
     (*p) -> size = 0;
+    (*p) -> searcher = NULL;
 
     return OK;
 }
@@ -68,7 +69,7 @@ status_t ADT_vector_search(const vector_t *p1, const void *v, vector_t **p2) {
 
     printf("searching!\n");
 
-    if (p1 == NULL || p1->searcher == NULL || p2 == NULL)
+    if (p1 == NULL || p1->searcher == NULL || v == NULL || p2 == NULL)
         return ERROR_NULL_POINTER;
 
     if ((st = ADT_vector_create(p2)) != OK)
