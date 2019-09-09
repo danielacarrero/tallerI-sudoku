@@ -24,11 +24,14 @@ status_t ADT_vector_create(vector_t  **p) {
 status_t ADT_vector_destroy(void **p) {
     size_t i;
     vector_t **pv = (vector_t **) p;
+    status_t st;
 
     if(pv == NULL)
         return ERROR_NULL_POINTER;
 
     for(i=0; i < (*pv)->size; i++){
+        if((st = (*((*pv) -> destroyer)) ((*pv) -> elements + i)) != OK)
+            return st;
         (*pv) -> elements[i] = NULL;
     }
     free((*pv) -> elements);
@@ -83,4 +86,13 @@ void * ADT_Vector_element_at(const vector_t *p, size_t pos) {
     if (pos > p->size)
         return NULL;
     return p->elements[pos];
+}
+
+status_t ADT_Vector_set_destructor(vector_t *p, destroyer_t pf) {
+    if(p == NULL || pf == NULL)
+        return ERROR_NULL_POINTER;
+
+    p -> destroyer = pf;
+
+    return OK;
 }

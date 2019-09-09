@@ -80,6 +80,10 @@ status_t ADT_sudoku_destroy(sudoku_t *sudoku) {
 
     if (sudoku == NULL)
         return ERROR_NULL_POINTER;
+    if ((st = ADT_Vector_set_destructor(sudoku->initial_cells, ADT_cell_destroy)) != OK)
+        return st;
+    if ((st = ADT_Vector_set_destructor(sudoku->current_cells, ADT_cell_destroy)) != OK)
+        return st;
     if ((st = ADT_vector_destroy((void *) &(sudoku->initial_cells))) != OK)
         return st;
     if ((st = ADT_vector_destroy((void*) &(sudoku->current_cells))) != OK)
@@ -172,4 +176,16 @@ bool ADT_sudoku_compare_cell_position(const void *c1, const void *c2) {
         return true;
 
     return false;
+}
+
+status_t ADT_cell_destroy(void **c) {
+    cell_t **ct = (cell_t **) c;
+
+    if(ct == NULL)
+        return ERROR_NULL_POINTER;
+
+    free(*ct);
+    *ct = NULL;
+
+    return OK;
 }

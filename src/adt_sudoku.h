@@ -40,5 +40,6 @@ status_t ADT_sudoku_destroy(sudoku_t *sudoku);
 status_t ADT_sudoku_format_printable(const sudoku_t *sudoku, char **printable, size_t size);
 bool ADT_sudoku_compare_cells(const void *c1, const void *c2);
 bool ADT_sudoku_compare_cell_position(const void *c1, const void *c2);
+status_t ADT_cell_destroy(void **c);
 
 #endif
