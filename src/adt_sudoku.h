@@ -24,9 +24,9 @@
 #define MAX_NUM_CELLS 81
 
 typedef struct {
-    uint8_t row;
-    uint8_t col;
-    uint8_t value;
+    size_t row;
+    size_t col;
+    size_t value;
 } cell_t;
 
 typedef struct {
@@ -35,7 +35,7 @@ typedef struct {
 } sudoku_t;
 
 status_t ADT_sudoku_init(sudoku_t *sudoku, FILE * fi );
-status_t ADT_sudoku_add_initial_cell(sudoku_t * sudoku, uint8_t row, uint8_t col, uint8_t value);
+status_t ADT_sudoku_add_initial_cell(sudoku_t * sudoku, size_t row, size_t col, size_t value);
 status_t ADT_sudoku_destroy(sudoku_t *sudoku);
 status_t ADT_sudoku_format_printable(const sudoku_t *sudoku, char **printable, size_t size);
 bool ADT_sudoku_compare_cells(const void *c1, const void *c2);

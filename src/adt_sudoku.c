@@ -7,9 +7,11 @@
 status_t ADT_sudoku_init(sudoku_t *sudoku, FILE * fi ) {
     char row_line[LEN_MAX_SUDOKU_LINE];
     char *iter;
+    char *temp;
     bool eof = false;
-    int row = 1;
-    int col;
+    size_t row = 1;
+    size_t col;
+    size_t value;
 
     if (sudoku == NULL || fi == NULL)
         return ERROR_NULL_POINTER;
@@ -25,7 +27,8 @@ status_t ADT_sudoku_init(sudoku_t *sudoku, FILE * fi ) {
         }
         iter = strtok(row_line, DELIMITER_SUDOKU);
         while (iter != NULL && !eof) {
-            if (ADT_sudoku_add_initial_cell(sudoku, (uint8_t) row, (uint8_t) col, (uint8_t) atoi(iter)) != OK){
+            value = (size_t) strtol(iter, &temp, 10);
+            if (ADT_sudoku_add_initial_cell(sudoku, row, col, value) != OK){
                 return ERROR_CREATING_SUDOKU;
             }
             iter = strtok(NULL, DELIMITER_SUDOKU);
@@ -38,7 +41,7 @@ status_t ADT_sudoku_init(sudoku_t *sudoku, FILE * fi ) {
     return OK;
 }
 
-status_t ADT_sudoku_add_initial_cell(sudoku_t * sudoku, uint8_t row, uint8_t col, uint8_t value) {
+status_t ADT_sudoku_add_initial_cell(sudoku_t * sudoku, size_t row, size_t col, size_t value) {
     cell_t new_cell;
     status_t st;
 
@@ -47,7 +50,7 @@ status_t ADT_sudoku_add_initial_cell(sudoku_t * sudoku, uint8_t row, uint8_t col
     if (value == EMPTY_CELL)
         return OK;
 
-    //printf("intentando agregar celda con col: %d, row: %d, value: %d\n", (int)col, (int)row, (int)value);
+    printf("intentando agregar celda con col: %zu, row: %zu, value: %zu\n", col, row, value);
 
     new_cell.row = row;
     new_cell.col = col;
@@ -97,8 +100,8 @@ status_t ADT_sudoku_format_printable(const sudoku_t *sudoku, char **printable, s
         } else if(t_row % 2){
             strncat(*printable, SUDOKU_INIT_TABLE_ROW, printable_len);
             for(col = 1; col <= MAX_NUM_COLS; col ++) {
-                search_cell.row = (uint8_t) row;
-                search_cell.col = (uint8_t) col;
+                search_cell.row = row;
+                search_cell.col = col;
 
                 if ((st = ADT_vector_search(sudoku->current_cells, &search_cell, &search_result)) != OK){
                     printf("error al buscar\n");
@@ -111,8 +114,8 @@ status_t ADT_sudoku_format_printable(const sudoku_t *sudoku, char **printable, s
                     if (result_cell == NULL){
                         return ERROR_FORMATTING_SUDOKU;
                     }
-                    printf("intentando poner el numero: %u\n", (uint8_t) result_cell->value);
-                    snprintf(cell_number, LEN_MAX_NUMBER,"%u", (uint8_t) result_cell->value);
+                    printf("intentando poner el numero: %zu\n", (size_t) result_cell->value);
+                    snprintf(cell_number, LEN_MAX_NUMBER,"%zu", (size_t) result_cell->value);
                     printf("cell_numbre: %s\n", cell_number);
                     strncat(*printable, cell_number, printable_len);
                 }
@@ -151,11 +154,11 @@ bool ADT_sudoku_compare_cell_position(const void *c1, const void *c2) {
     cell_t *cell2 = (cell_t *) c2;
 
     printf("comparing cells: \n");
-    printf("cell 1 row %d col %d value %d\n", (uint8_t) cell1->row, (uint8_t) cell1-> col, (uint8_t) cell1->value);
-    printf("cell 2 row %d col %d value %d\n", (uint8_t) cell2->row, (uint8_t) cell2-> col, (uint8_t) cell2->value);
+    printf("cell 1 row %zu col %zu value %zu\n", (size_t) cell1->row, (size_t) cell1-> col, (size_t) cell1->value);
+    printf("cell 2 row %zu col %zu value %zu\n", (size_t) cell2->row, (size_t) cell2-> col, (size_t) cell2->value);
 
-    if ((uint8_t) cell1->col == (uint8_t) cell2->col
-        && (uint8_t) cell1->row == (uint8_t) cell2->row)
+    if ( (size_t) cell1->col == (size_t) cell2->col
+        && (size_t) cell1->row == (size_t) cell2->row)
         return true;
 
     return false;
