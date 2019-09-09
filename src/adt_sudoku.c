@@ -104,7 +104,6 @@ status_t ADT_sudoku_format_printable(const sudoku_t *sudoku, char **printable, s
                     return st;
                 }
                 if (search_result->size == 0){
-                    printf("search_result tiene size 0\n");
                     strncat(*printable, SUDOKU_EMPTY_CELL, printable_len);
                 } else {
                     cell_t *result_cell = (cell_t *) ADT_Vector_element_at(sudoku->current_cells, 0);
