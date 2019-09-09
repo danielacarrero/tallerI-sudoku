@@ -92,7 +92,7 @@ status_t ADT_sudoku_format_printable(const sudoku_t *sudoku, char **printable, s
 
     strncat(*printable, SUDOKU_BIG_CELL_LIMIT_ROW, printable_len);
     for (size_t t_row = 1; t_row <= SUDOKU_MAX_NUM_TABLE_ROWS; t_row ++) {
-        if(t_row % 3) {
+        if(t_row % 3 == 0) {
             strncat(*printable, SUDOKU_BIG_CELL_LIMIT_ROW, printable_len);
         } else if(t_row % 2){
             strncat(*printable, SUDOKU_INIT_TABLE_ROW, printable_len);
