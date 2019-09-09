@@ -67,8 +67,6 @@ status_t ADT_vector_set_searcher(vector_t *p, searcher_t pf) {
 status_t ADT_vector_search(const vector_t *p1, const void *v, vector_t **p2) {
     status_t st;
 
-    printf("searching!\n");
-
     if (p1 == NULL || p1->searcher == NULL || v == NULL || p2 == NULL)
         return ERROR_NULL_POINTER;
 
