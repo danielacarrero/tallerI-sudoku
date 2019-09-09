@@ -2,7 +2,7 @@
 #define ERRORS__H
 #include <stdio.h>
 #include "types.h"
-#define MAX_ERRORS 9
+#define MAX_ERRORS 12
 
 #define MSG_OK "OK\n"
 #define MSG_ERROR "ERROR\n"
@@ -24,6 +24,9 @@
 #define MSG_ERROR_CLOSED_SOCKET "La conexión está cerrada.\n"
 #define MSG_ERROR_SOCKET_SENDING "Error en el envío de datos.\n"
 #define MSG_ERROR_SOCKET_RECEIVING "Error en la recepción de datos.\n"
+#define MSG_ERROR_CREATING_SUDOKU "Error en la inicialización del sudoku.\n"
+#define MSG_ERROR_FORMATTING_SUDOKU "Error en el formato del sudoku.\n"
+#define MSG_ERROR_OPENING_FILE "No se pudo abrir el archivo.\n"
 
 status_t print_error_msg(status_t code);
 

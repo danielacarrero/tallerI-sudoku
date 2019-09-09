@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/tp1_sudoku.dir/src/client.c.o"
   "CMakeFiles/tp1_sudoku.dir/src/server.c.o"
   "CMakeFiles/tp1_sudoku.dir/src/adt_sudoku.c.o"
+  "CMakeFiles/tp1_sudoku.dir/src/utils.c.o"
+  "CMakeFiles/tp1_sudoku.dir/src/adt_vector.c.o"
   "tp1_sudoku.pdb"
   "tp1_sudoku"
 )

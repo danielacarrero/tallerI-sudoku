@@ -177,6 +177,33 @@ src/adt_sudoku.c.s:
 	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/adt_sudoku.c.s
 .PHONY : src/adt_sudoku.c.s
 
+src/adt_vector.o: src/adt_vector.c.o
+
+.PHONY : src/adt_vector.o
+
+# target to build an object file
+src/adt_vector.c.o:
+	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/adt_vector.c.o
+.PHONY : src/adt_vector.c.o
+
+src/adt_vector.i: src/adt_vector.c.i
+
+.PHONY : src/adt_vector.i
+
+# target to preprocess a source file
+src/adt_vector.c.i:
+	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/adt_vector.c.i
+.PHONY : src/adt_vector.c.i
+
+src/adt_vector.s: src/adt_vector.c.s
+
+.PHONY : src/adt_vector.s
+
+# target to generate assembly for a file
+src/adt_vector.c.s:
+	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/adt_vector.c.s
+.PHONY : src/adt_vector.c.s
+
 src/client.o: src/client.c.o
 
 .PHONY : src/client.o
@@ -285,6 +312,33 @@ src/server.c.s:
 	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/server.c.s
 .PHONY : src/server.c.s
 
+src/utils.o: src/utils.c.o
+
+.PHONY : src/utils.o
+
+# target to build an object file
+src/utils.c.o:
+	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/utils.c.o
+.PHONY : src/utils.c.o
+
+src/utils.i: src/utils.c.i
+
+.PHONY : src/utils.i
+
+# target to preprocess a source file
+src/utils.c.i:
+	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/utils.c.i
+.PHONY : src/utils.c.i
+
+src/utils.s: src/utils.c.s
+
+.PHONY : src/utils.s
+
+# target to generate assembly for a file
+src/utils.c.s:
+	$(MAKE) -f CMakeFiles/tp1_sudoku.dir/build.make CMakeFiles/tp1_sudoku.dir/src/utils.c.s
+.PHONY : src/utils.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -300,6 +354,9 @@ help:
 	@echo "... src/adt_sudoku.o"
 	@echo "... src/adt_sudoku.i"
 	@echo "... src/adt_sudoku.s"
+	@echo "... src/adt_vector.o"
+	@echo "... src/adt_vector.i"
+	@echo "... src/adt_vector.s"
 	@echo "... src/client.o"
 	@echo "... src/client.i"
 	@echo "... src/client.s"
@@ -312,6 +369,9 @@ help:
 	@echo "... src/server.o"
 	@echo "... src/server.i"
 	@echo "... src/server.s"
+	@echo "... src/utils.o"
+	@echo "... src/utils.i"
+	@echo "... src/utils.s"
 .PHONY : help
 
 

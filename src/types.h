@@ -13,8 +13,12 @@ typedef enum {
     ERROR_CLOSED_SOCKET,
     ERROR_SOCKET_SENDING,
     ERROR_SOCKET_RECEIVING,
+    ERROR_CREATING_SUDOKU,
+    ERROR_FORMATTING_SUDOKU,
+    ERROR_OPENING_FILE,
     ERROR_INVALID_DATA,
     ERROR_NULL_POINTER,
+    ERROR_OUT_OF_MEMORY,
     OK
 } status_t;
 
@@ -22,5 +26,7 @@ typedef enum {
     CLIENT,
     SERVER
 } socket_type_t;
+
+typedef status_t (*destructor_t)(void **);
 
 #endif

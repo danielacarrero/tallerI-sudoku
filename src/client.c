@@ -34,7 +34,6 @@ void process_input(socket_t *socket) {
 
     while(!exit){
         if(fgets(buf, CMD_MAX_INPUT_SIZE, stdin) == NULL){
-            fprintf(stderr, "%s\n", "Error al leer de consola.");
             return;
         }
 

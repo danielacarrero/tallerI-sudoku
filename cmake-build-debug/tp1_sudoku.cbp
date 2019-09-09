@@ -90,6 +90,12 @@
 		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_sudoku.h">
 			<Option target="tp1_sudoku"/>
 		</Unit>
+		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_vector.c">
+			<Option target="tp1_sudoku"/>
+		</Unit>
+		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_vector.h">
+			<Option target="tp1_sudoku"/>
+		</Unit>
 		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/client.c">
 			<Option target="tp1_sudoku"/>
 		</Unit>
@@ -115,6 +121,12 @@
 			<Option target="tp1_sudoku"/>
 		</Unit>
 		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/types.h">
+			<Option target="tp1_sudoku"/>
+		</Unit>
+		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/utils.c">
+			<Option target="tp1_sudoku"/>
+		</Unit>
+		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/utils.h">
 			<Option target="tp1_sudoku"/>
 		</Unit>
 		<Unit filename="/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/CMakeLists.txt">

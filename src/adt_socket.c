@@ -15,9 +15,8 @@ status_t ADT_socket_init(socket_t *adt_socket, socket_type_t type) {
     struct addrinfo hints;
     int res;
 
-    if (adt_socket == NULL) {
+    if (adt_socket == NULL)
         return ERROR_NULL_POINTER;
-    }
 
     memset(&hints, 0, sizeof(struct addrinfo));
     hints.ai_family = AF_INET;
@@ -36,9 +35,8 @@ status_t ADT_socket_init(socket_t *adt_socket, socket_type_t type) {
 }
 
 status_t ADT_socket_destroy(socket_t *adt_socket) {
-    if (adt_socket == NULL) {
+    if (adt_socket == NULL)
         return ERROR_NULL_POINTER;
-    }
 
     shutdown(adt_socket->file_descriptor, SHUT_RDWR);
     close(adt_socket->file_descriptor);
@@ -52,15 +50,13 @@ status_t ADT_socket_connect(socket_t *adt_socket) {
     bool connected = false;
     struct addrinfo *iterator;
 
-    if (adt_socket == NULL) {
+    if (adt_socket == NULL)
         return ERROR_NULL_POINTER;
-    }
 
     for (iterator = adt_socket->addrinfo_res; iterator != NULL && connected == false; iterator = iterator->ai_next) {
         fd = socket(iterator->ai_family, iterator->ai_socktype, iterator->ai_protocol);
-        if (fd == INVALID_FD){
+        if (fd == INVALID_FD)
             continue;
-        }
 
         res = connect(fd, iterator->ai_addr, iterator->ai_addrlen);
         if (res == INVALID_FD) {
@@ -74,9 +70,8 @@ status_t ADT_socket_connect(socket_t *adt_socket) {
     }
 
     freeaddrinfo(adt_socket->addrinfo_res);
-    if (!connected) {
+    if (!connected)
         return ERROR_SOCKET_CONNECTION;
-    }
 
     return OK;
 }
@@ -85,10 +80,13 @@ status_t ADT_socket_bind_and_listen(socket_t *adt_socket) {
     int res;
     int fd;
 
+    if(adt_socket == NULL)
+        return ERROR_NULL_POINTER;
+
     fd = socket(adt_socket->addrinfo_res->ai_family, adt_socket->addrinfo_res->ai_socktype, adt_socket->addrinfo_res->ai_protocol);
-    if (fd == INVALID_FD) {
+    if (fd == INVALID_FD)
         return ERROR_SOCKET_BINDING_AND_LISTEN;
-    }
+
     adt_socket->file_descriptor = fd;
 
     res = bind(adt_socket->file_descriptor, adt_socket->addrinfo_res->ai_addr, adt_socket->addrinfo_res->ai_addrlen);
@@ -109,20 +107,13 @@ status_t ADT_socket_bind_and_listen(socket_t *adt_socket) {
 
     return OK;
 }
-/*
-status_t ADT_socket_accept(socket_t *adt_socket) {
-
-
-    return OK;
-}*/
 
 status_t ADT_socket_send(socket_t *adt_socket, const char *buffer, size_t length) {
     int sent = 0;
     int res = 0;
 
-    if(adt_socket == NULL || buffer == NULL){
+    if(adt_socket == NULL || buffer == NULL)
         return ERROR_NULL_POINTER;
-    }
 
     while(sent < length) {
         res = send(adt_socket->file_descriptor, &buffer[sent], length - sent, 0); //TODO: MSG_NOSIGNAL (no está en macOS)
@@ -147,9 +138,8 @@ status_t ADT_socket_receive(socket_t *adt_socket, int peer_fd, int *res, char *b
 
     memset(buffer, 0, length);
 
-    if (adt_socket == NULL || buffer == NULL) {
+    if (adt_socket == NULL || buffer == NULL)
         return ERROR_NULL_POINTER;
-    }
 
     while(received < length) {
         *res = recv(peer_fd, &buffer[received], length - received, 0);
@@ -181,6 +171,10 @@ status_t ADT_socket_receive(socket_t *adt_socket, int peer_fd, int *res, char *b
 }
 
 status_t ADT_socket_accept(socket_t *adt_socket, int *peer_fd) {
+
+    if(adt_socket == NULL || peer_fd == NULL)
+        return ERROR_NULL_POINTER;
+
     *peer_fd = accept(adt_socket->file_descriptor, NULL, NULL);
 
     if (*peer_fd == INVALID_FD) {

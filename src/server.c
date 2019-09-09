@@ -7,34 +7,75 @@
 
 status_t init_server(const char *service) {
     socket_t socket;
+    sudoku_t sudoku;
     status_t st;
 
-    socket.host = NULL;
-    socket.service = service;
-
-    if ((st = ADT_socket_init(&socket, SERVER)) != OK) {
+    if((st = init_socket(&socket, service)) != OK)
         return st;
-    }
-
-    if ((st = ADT_socket_bind_and_listen(&socket)) != OK) {
-        return st;
-    }
-
     fprintf(stdout, "%s\n", "Server inicializado! :)");
 
-    if ((st = wait_and_receive(&socket)) != OK) {
+    if((st = init_sudoku(&sudoku)) != OK){
         ADT_socket_destroy(&socket);
         return st;
     }
 
-    if ((st = ADT_socket_destroy(&socket)) != OK) {
+    if ((st = wait_and_receive(&socket, &sudoku)) != OK) {
+        destroy_server(&socket, &sudoku);
         return st;
     }
+
+    if ((st = destroy_server(&socket, &sudoku)) != OK)
+        return st;
 
     return OK;
 }
 
-status_t wait_and_receive(socket_t *socket) {
+status_t init_socket(socket_t *socket, const char *service) {
+    status_t st;
+
+    if (socket == NULL || service == NULL)
+        return ERROR_NULL_POINTER;
+
+    socket->host = NULL;
+    socket->service = service;
+
+    if ((st = ADT_socket_init(socket, SERVER)) != OK)
+        return st;
+    if ((st = ADT_socket_bind_and_listen(socket)) != OK)
+        return st;
+    return OK;
+}
+
+status_t init_sudoku(sudoku_t *sudoku) {
+    status_t st;
+    FILE * fi;
+
+    if (sudoku == NULL)
+        return ERROR_NULL_POINTER;
+
+    if ((fi = fopen(SUDOKU_FILE_PATH, "rt")) == NULL)
+        return ERROR_OPENING_FILE;
+    if((st = ADT_sudoku_init(sudoku, fi)) != OK) {
+        fclose(fi);
+        return st;
+    }
+
+    fclose(fi);
+    return OK;
+}
+
+status_t destroy_server(socket_t *socket, sudoku_t *sudoku) {
+    status_t st;
+    if ((st = ADT_sudoku_destroy(sudoku)) != OK){
+        ADT_socket_destroy(socket);
+        return st;
+    }
+    if ((st = ADT_socket_destroy(socket)) != OK)
+        return st;
+    return OK;
+}
+
+status_t wait_and_receive(socket_t *socket, sudoku_t *sudoku) {
     status_t st = OK;
     int peer_fd = 0;
     int res = 0;
@@ -53,7 +94,7 @@ status_t wait_and_receive(socket_t *socket) {
         printf("buffer size: %d\n", res);
         printf("comando: %s\n", buffer);
 
-        if((st = process_command_received(buffer)) != OK){
+        if((st = process_command_received(socket ,sudoku, buffer)) != OK){
             print_error_msg(st);
         }
 
@@ -63,37 +104,54 @@ status_t wait_and_receive(socket_t *socket) {
     return st;
 }
 
-status_t process_command_received(const char *buffer) {
+status_t process_command_received(socket_t *socket, sudoku_t *sudoku, const char *buffer) {
     switch(buffer[0]) {
         case CMD_GET:
-            return process_get_command();
+            return process_get_command(socket, sudoku);
         case CMD_PUT:
-            return process_put_command(buffer);
+            return process_put_command(socket, sudoku, buffer);
         case CMD_RESET:
-            return process_reset_command();
+            return process_reset_command(socket, sudoku);
         case CMD_VERIFY:
-            return process_verify_command();
+            return process_verify_command(socket, sudoku);
         default:
             return ERROR_INVALID_DATA;
     }
 }
 
-status_t process_get_command() {
+status_t process_get_command(socket_t *socket, sudoku_t *sudoku) {
+    status_t st;
+
     printf("Processing GET command\n");
+    char *printable;
+
+    if((printable = (char *) malloc(LEN_MAX_SUDOKU_TABLE * sizeof(char))) == NULL)
+        return ERROR_OUT_OF_MEMORY;
+
+    if((st = ADT_sudoku_format_printable(sudoku, &printable, LEN_MAX_SUDOKU_TABLE)) != OK){
+        printf("Hubo un error con printable.\n");
+        return st;
+    }
+
+    printf("size of printable: %lu\n", strlen(printable));
+    printf("%s\n", printable);
+
+    free(printable);
+    printable = NULL;
     return OK;
 }
 
-status_t process_put_command(const char *buffer) {
+status_t process_put_command(socket_t *socket, sudoku_t *sudoku, const char *buffer) {
     printf("Processing PUT command\n");
     return OK;
 }
 
-status_t process_reset_command() {
+status_t process_reset_command(socket_t *socket, sudoku_t *sudoku) {
     printf("Processing RESET command\n");
     return OK;
 }
 
-status_t process_verify_command() {
+status_t process_verify_command(socket_t *socket, sudoku_t *sudoku) {
     printf("Processing VERIFY command\n");
     return OK;
 }
