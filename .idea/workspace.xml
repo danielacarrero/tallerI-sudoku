@@ -13,7 +13,19 @@
   <component name="ChangeListManager">
     <list default="true" id="c4b284d0-58a7-4e22-8a8d-9badc6ffcb56" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/C.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/C.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/src/main.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/src/main.c.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/tp1_sudoku" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/tp1_sudoku" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/adt_sudoku.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/adt_sudoku.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/adt_sudoku.o" beforeDir="false" afterPath="$PROJECT_DIR$/src/adt_sudoku.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/adt_vector.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/adt_vector.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/adt_vector.o" beforeDir="false" afterPath="$PROJECT_DIR$/src/adt_vector.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/server.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/server.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server.o" beforeDir="false" afterPath="$PROJECT_DIR$/src/server.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tp" beforeDir="false" afterPath="$PROJECT_DIR$/src/tp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,14 +46,15 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/src" />
+    <property name="settings.editor.selected.configurable" value="CPPToolchains" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/src" />
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
@@ -58,7 +71,7 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="tp1_sudoku" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="tp1_sudoku" TARGET_NAME="tp1_sudoku" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="tp1_sudoku" RUN_TARGET_NAME="tp1_sudoku">
+    <configuration name="tp1_sudoku" type="CMakeRunConfiguration" factoryName="Application" singleton="false" PROGRAM_PARAMS="server 7777" PASS_PARENT_ENVS_2="true" PROJECT_NAME="tp1_sudoku" TARGET_NAME="tp1_sudoku" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="tp1_sudoku" RUN_TARGET_NAME="tp1_sudoku">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -75,7 +88,7 @@
       <option name="presentableId" value="Default" />
       <updated>1567647890905</updated>
       <workItem from="1567647892181" duration="6403000" />
-      <workItem from="1567902967535" duration="60833000" />
+      <workItem from="1567902967535" duration="68948000" />
     </task>
     <servers />
   </component>
@@ -94,5 +107,26 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/server.c</url>
+          <line>133</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/server.c</url>
+          <line>21</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/server.c</url>
+          <line>97</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

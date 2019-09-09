@@ -72,8 +72,7 @@ void * ADT_vector_search(const vector_t *p1, void *v) {
         return NULL;
 
     for (size_t i = 0; i < p1->size; i++) {
-        if ((*(p1->searcher))((void *)p1->elements[i], v) == true) {
-            printf("in search, appending element: %zu\n", i);
+        if ((*(p1->searcher))(p1->elements[i], v) == true) {
             return p1->elements[i];
         }
     }

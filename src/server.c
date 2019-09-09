@@ -7,7 +7,7 @@
 
 status_t init_server(const char *service) {
     socket_t socket;
-    sudoku_t sudoku;
+    sudoku_t *sudoku;
     status_t st;
 
     if((st = init_socket(&socket, service)) != OK)
@@ -19,12 +19,12 @@ status_t init_server(const char *service) {
         return st;
     }
 
-    if ((st = wait_and_receive(&socket, &sudoku)) != OK) {
-        destroy_server(&socket, &sudoku);
+    if ((st = wait_and_receive(&socket, sudoku)) != OK) {
+        destroy_server(&socket, sudoku);
         return st;
     }
 
-    if ((st = destroy_server(&socket, &sudoku)) != OK)
+    if ((st = destroy_server(&socket, sudoku)) != OK)
         return st;
 
     return OK;
@@ -47,7 +47,7 @@ status_t init_socket(socket_t *socket, const char *service) {
     return OK;
 }
 
-status_t init_sudoku(sudoku_t *sudoku) {
+status_t init_sudoku(sudoku_t **sudoku) {
     status_t st;
     FILE * fi;
 
@@ -56,7 +56,7 @@ status_t init_sudoku(sudoku_t *sudoku) {
 
     if ((fi = fopen(SUDOKU_FILE_PATH, "rt")) == NULL)
         return ERROR_OPENING_FILE;
-    if((st = ADT_sudoku_init(&sudoku, fi)) != OK) {
+    if((st = ADT_sudoku_init(sudoku, fi)) != OK) {
         fclose(fi);
         return st;
     }
@@ -97,6 +97,7 @@ status_t wait_and_receive(socket_t *socket, sudoku_t *sudoku) {
 
         if((st = process_command_received(socket ,sudoku, buffer)) != OK){
             print_error_msg(st);
+            return st;
         }
 
         memset(&buffer, 0, MAX_LENGTH_RECEIVED);
@@ -149,7 +150,11 @@ status_t process_put_command(socket_t *socket, sudoku_t *sudoku, const char *buf
 }
 
 status_t process_reset_command(socket_t *socket, sudoku_t *sudoku) {
+    //status_t st;
+
     printf("Processing RESET command\n");
+
+
     return OK;
 }
 
