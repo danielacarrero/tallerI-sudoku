@@ -99,8 +99,6 @@ status_t ADT_sudoku_format_printable(const sudoku_t *sudoku, char **printable, s
                 search_cell.row = (uint8_t) row;
                 search_cell.col = (uint8_t) col;
 
-                (ADT_sudoku_compare_cell_position((void *) &search_cell, sudoku->current_cells->elements[0])) ? printf("true\n"): printf("false\n");
-
                 if ((st = ADT_vector_search(sudoku->current_cells, &search_cell, &search_result)) != OK){
                     printf("error al buscar\n");
                     return st;
