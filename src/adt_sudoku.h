@@ -8,10 +8,11 @@
 #define LEN_MAX_NUMBER 4
 #define LEN_MAX_SUDOKU_LINE 19
 #define LEN_MAX_SUDOKU_TABLE 723
-#define SUDOKU_BIG_CELL_LIMIT_ROW "U===========U===========U===========U"
-#define SUDOKU_LIMIT_ROW "U---+---+---U---+---+---U---+---+---U"
+#define SUDOKU_BIG_CELL_LIMIT_ROW "U===========U===========U===========U\n"
+#define SUDOKU_LIMIT_ROW "U---+---+---U---+---+---U---+---+---U\n"
 #define SUDOKU_BIG_CELL_LIMIT_COL " U "
 #define SUDOKU_INIT_TABLE_ROW "U "
+#define SUDOKU_FINISH_TABLE_ROW " U\n"
 #define SUDOKU_LIMIT_COL " | "
 #define SUDOKU_EMPTY_CELL " "
 #define SUDOKU_MAX_NUM_TABLE_ROWS 18
