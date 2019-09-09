@@ -131,7 +131,6 @@ status_t ADT_sudoku_format_printable(const sudoku_t *sudoku, char **printable, s
         }
 
     }
-    strncat(*printable, SUDOKU_BIG_CELL_LIMIT_ROW, printable_len);
 
     printf("printable en la funcion: %s\n", *printable);
     printf("size of printable en la funcion: %lu\n", strlen(*printable));
