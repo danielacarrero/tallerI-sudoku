@@ -151,8 +151,8 @@ bool ADT_sudoku_compare_cell_position(const void *c1, const void *c2) {
     cell_t *cell2 = (cell_t *) c2;
 
     printf("comparing cells: \n");
-    printf("cell 1 row %d col %d\n", (uint8_t) cell1->row, (uint8_t) cell1-> col);
-    printf("cell 2 row %d col %d\n", (uint8_t) cell2->row, (uint8_t) cell2-> col);
+    printf("cell 1 row %d col %d value %d\n", (uint8_t) cell1->row, (uint8_t) cell1-> col, (uint8_t) cell1->value);
+    printf("cell 2 row %d col %d value %d\n", (uint8_t) cell2->row, (uint8_t) cell2-> col, (uint8_t) cell2->value);
 
     if ((uint8_t) cell1->col == (uint8_t) cell2->col
         && (uint8_t) cell1->row == (uint8_t) cell2->row)
