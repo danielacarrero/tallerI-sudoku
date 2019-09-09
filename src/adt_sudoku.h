@@ -5,7 +5,7 @@
 #include "types.h"
 #include "adt_vector.h"
 
-#define LEN_MAX_NUMBER 3
+#define LEN_MAX_NUMBER 4
 #define LEN_MAX_SUDOKU_LINE 19
 #define LEN_MAX_SUDOKU_TABLE 722
 #define SUDOKU_BIG_CELL_LIMIT_ROW "U===========U===========U===========U"
