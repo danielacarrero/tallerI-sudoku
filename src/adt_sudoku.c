@@ -87,8 +87,6 @@ status_t ADT_sudoku_format_printable(const sudoku_t *sudoku, char **printable, s
     if (sudoku == NULL || printable == NULL)
         return ERROR_NULL_POINTER;
 
-    printf("elemento 0 en current_cells: %uz\n", (uint8_t) sudoku->current_cells->elements[0]);
-
     if (ADT_vector_set_searcher(sudoku->current_cells, ADT_sudoku_compare_cell_position) != OK)
         return ERROR_FORMATTING_SUDOKU;
 
@@ -116,7 +114,7 @@ status_t ADT_sudoku_format_printable(const sudoku_t *sudoku, char **printable, s
                         return ERROR_FORMATTING_SUDOKU;
                     }
                     printf("intentando poner el numero: %d\n", (uint8_t) result_cell->value);
-                    snprintf(cell_number, LEN_MAX_NUMBER,"%d", (uint8_t) result_cell->value);
+                    snprintf(cell_number, LEN_MAX_NUMBER,"%zu", (uint8_t) result_cell->value);
                     printf("cell_numbre: %s\n", cell_number);
                     strncat(*printable, cell_number, printable_len);
                 }

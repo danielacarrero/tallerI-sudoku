@@ -12,31 +12,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4b284d0-58a7-4e22-8a8d-9badc6ffcb56" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/adt_vector.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/adt_vector.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/cmake_clean.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/tp1_sudoku.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/tp1_sudoku.cbp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/src/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/adt_socket.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/adt_socket.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/adt_sudoku.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/adt_sudoku.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/adt_sudoku.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/adt_sudoku.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/client.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/errors.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/errors.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/errors.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/errors.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/server.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/server.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/types.h" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -98,7 +75,7 @@
       <option name="presentableId" value="Default" />
       <updated>1567647890905</updated>
       <workItem from="1567647892181" duration="6403000" />
-      <workItem from="1567902967535" duration="53409000" />
+      <workItem from="1567902967535" duration="53570000" />
     </task>
     <servers />
   </component>
