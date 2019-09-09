@@ -82,6 +82,9 @@ status_t ADT_sudoku_destroy(sudoku_t *sudoku) {
     if ((st = ADT_vector_destroy((void*) &(sudoku->current_cells))) != OK)
         return st;
 
+    free(sudoku);
+    sudoku = NULL;
+
     printf("Sudoku destruido!\n");
     return OK;
 }
