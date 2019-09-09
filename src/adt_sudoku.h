@@ -34,7 +34,7 @@ typedef struct {
     vector_t *current_cells;
 } sudoku_t;
 
-status_t ADT_sudoku_init(sudoku_t *sudoku, FILE * fi );
+status_t ADT_sudoku_init(sudoku_t **sudoku, FILE * fi );
 status_t ADT_sudoku_add_initial_cell(sudoku_t * sudoku, size_t row, size_t col, size_t value);
 status_t ADT_sudoku_destroy(sudoku_t *sudoku);
 status_t ADT_sudoku_format_printable(const sudoku_t *sudoku, char **printable, size_t size);

@@ -56,7 +56,7 @@ status_t init_sudoku(sudoku_t *sudoku) {
 
     if ((fi = fopen(SUDOKU_FILE_PATH, "rt")) == NULL)
         return ERROR_OPENING_FILE;
-    if((st = ADT_sudoku_init(sudoku, fi)) != OK) {
+    if((st = ADT_sudoku_init(&sudoku, fi)) != OK) {
         fclose(fi);
         return st;
     }

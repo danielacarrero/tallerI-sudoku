@@ -16,8 +16,10 @@
       <change beforePath="$PROJECT_DIR$/src/adt_sudoku.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/adt_sudoku.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/adt_sudoku.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/adt_sudoku.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/adt_sudoku.o" beforeDir="false" afterPath="$PROJECT_DIR$/src/adt_sudoku.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/adt_vector.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/adt_vector.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/adt_vector.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/adt_vector.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/adt_vector.o" beforeDir="false" afterPath="$PROJECT_DIR$/src/adt_vector.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server.o" beforeDir="false" afterPath="$PROJECT_DIR$/src/server.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/server.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tp" beforeDir="false" afterPath="$PROJECT_DIR$/src/tp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -80,7 +82,7 @@
       <option name="presentableId" value="Default" />
       <updated>1567647890905</updated>
       <workItem from="1567647892181" duration="6403000" />
-      <workItem from="1567902967535" duration="57836000" />
+      <workItem from="1567902967535" duration="59856000" />
     </task>
     <servers />
   </component>

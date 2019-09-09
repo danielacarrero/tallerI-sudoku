@@ -62,26 +62,19 @@ status_t ADT_vector_set_searcher(vector_t *p, searcher_t pf) {
     return OK;
 }
 
-/* Search value (v) in vector p1 elements by it's searcher
- * and returns search results in vector p2 */
-status_t ADT_vector_search(const vector_t *p1, void *v, vector_t **p2) {
-    status_t st;
-
-    if (p1 == NULL || p1->searcher == NULL || v == NULL || p2 == NULL)
-        return ERROR_NULL_POINTER;
-
-    if ((st = ADT_vector_create(p2)) != OK)
-        return st;
+/* Search value (v) in vector p1 elements */
+void * ADT_vector_search(const vector_t *p1, void *v) {
+    if (p1 == NULL || p1->searcher == NULL || v == NULL)
+        return NULL;
 
     for (size_t i = 0; i < p1->size; i++) {
         if ((*(p1->searcher))((void *)p1->elements[i], v) == true) {
-            if((st = ADT_vector_append(*p2, p1->elements[i])) != OK)
-                return st;
             printf("in search, appending element: %zu\n", i);
+            return p1->elements[i];
         }
     }
 
-    return OK;
+    return NULL;
 }
 
 void * ADT_Vector_element_at(const vector_t *p, size_t pos) {
