@@ -113,8 +113,8 @@ status_t ADT_sudoku_format_printable(const sudoku_t *sudoku, char **printable, s
                     if (result_cell == NULL){
                         return ERROR_FORMATTING_SUDOKU;
                     }
-                    printf("intentando poner el numero: %d\n", (uint8_t) result_cell->value);
-                    snprintf(cell_number, LEN_MAX_NUMBER,"%zu", (uint8_t) result_cell->value);
+                    printf("intentando poner el numero: %u\n", (uint8_t) result_cell->value);
+                    snprintf(cell_number, LEN_MAX_NUMBER,"%u", (uint8_t) result_cell->value);
                     printf("cell_numbre: %s\n", cell_number);
                     strncat(*printable, cell_number, printable_len);
                 }
