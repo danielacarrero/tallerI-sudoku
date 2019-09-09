@@ -128,6 +128,7 @@ status_t process_get_command(socket_t *socket, sudoku_t *sudoku) {
 
     if((printable = (char *) malloc(LEN_MAX_SUDOKU_TABLE * sizeof(char))) == NULL)
         return ERROR_OUT_OF_MEMORY;
+    printable[0] = '\0';
 
     if((st = ADT_sudoku_format_printable(sudoku, &printable, LEN_MAX_SUDOKU_TABLE)) != OK){
         printf("Hubo un error con printable.\n");

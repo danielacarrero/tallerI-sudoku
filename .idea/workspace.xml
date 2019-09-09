@@ -12,7 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4b284d0-58a7-4e22-8a8d-9badc6ffcb56" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/adt_sudoku.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/adt_sudoku.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/server.c" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -74,7 +74,7 @@
       <option name="presentableId" value="Default" />
       <updated>1567647890905</updated>
       <workItem from="1567647892181" duration="6403000" />
-      <workItem from="1567902967535" duration="55400000" />
+      <workItem from="1567902967535" duration="55466000" />
     </task>
     <servers />
   </component>
