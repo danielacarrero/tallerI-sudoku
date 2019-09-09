@@ -32,6 +32,7 @@ status_t init_server(const char *service) {
 
 status_t init_socket(socket_t *socket, const char *service) {
     status_t st;
+    printf("init socket\n");
 
     if (socket == NULL || service == NULL)
         return ERROR_NULL_POINTER;
