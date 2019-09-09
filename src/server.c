@@ -130,10 +130,22 @@ status_t process_get_command(socket_t *socket, sudoku_t *sudoku) {
         return ERROR_OUT_OF_MEMORY;
     printable[0] = '\0';
 
-    if((st = ADT_sudoku_format_printable(sudoku, &printable, LEN_MAX_SUDOKU_TABLE)) != OK){
+    int col = 1;
+    int row = 1;
+    printf("comparar cendas: \n");
+    cell_t cell1;
+    cell1.col = (uint8_t) col;
+    cell1.row = (uint8_t) row;
+    cell_t cell2;
+    cell2.col = (uint8_t) col;
+    cell2.row = (uint8_t) row;
+
+    ADT_sudoku_compare_cell_position(&cell1, &cell2);
+
+    /*if((st = ADT_sudoku_format_printable(sudoku, &printable, LEN_MAX_SUDOKU_TABLE)) != OK){
         printf("Hubo un error con printable.\n");
         return st;
-    }
+    }*/
 
     printf("size of printable: %lu\n", strlen(printable));
     printf("%s\n", printable);
