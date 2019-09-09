@@ -17,6 +17,7 @@ status_t ADT_vector_create(vector_t  **p) {
     }
     (*p) -> size = 0;
     (*p) -> searcher = NULL;
+    (*p) -> destroyer = NULL;
 
     return OK;
 }
