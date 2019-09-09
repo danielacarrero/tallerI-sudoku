@@ -121,7 +121,7 @@ status_t process_command_received(socket_t *socket, sudoku_t *sudoku, const char
 }
 
 status_t process_get_command(socket_t *socket, sudoku_t *sudoku) {
-    status_t st;
+    //status_t st;
 
     printf("Processing GET command\n");
     char *printable;
