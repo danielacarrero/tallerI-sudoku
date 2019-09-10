@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include "client.h"
 
 status_t init_client(const char *host, const char *service) {
@@ -77,6 +78,7 @@ status_t receive(socket_t *socket) {
     int peer_fd = 0;
     int res = 0;
     char buffer[MAX_SMALL_BUF_LEN];
+    char *temp;
     int next_len;
     int next_res = 0;
 
@@ -87,11 +89,11 @@ status_t receive(socket_t *socket) {
         return st;
 
     if((st = ADT_socket_receive(socket, peer_fd, &res, buffer, MAX_SMALL_BUF_LEN)) == OK) {
-        if (res != MAX_SMALL_BUF_LEN) {
+        /*if (res != MAX_SMALL_BUF_LEN) {
             buffer[res + 1] = '\0';
-        }
+        }*/
 
-        next_len = ntohs((int) buffer);
+        next_len = ntohs(strtol(buffer, &temp, 10));
         char next_buffer[next_len];
 
         if ((st = ADT_socket_receive(socket, peer_fd, &next_res, next_buffer, next_len)) != OK) {
