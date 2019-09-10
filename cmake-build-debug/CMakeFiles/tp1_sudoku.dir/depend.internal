@@ -10,6 +10,7 @@ CMakeFiles/tp1_sudoku.dir/src/adt_sudoku.c.o
  /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_sudoku.h
  /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_vector.h
  /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/types.h
+ /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/utils.h
 CMakeFiles/tp1_sudoku.dir/src/adt_vector.c.o
  /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_vector.c
  /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_vector.h
@@ -18,6 +19,7 @@ CMakeFiles/tp1_sudoku.dir/src/client.c.o
  /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_socket.h
  /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/client.c
  /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/client.h
+ /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/errors.h
  /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/types.h
 CMakeFiles/tp1_sudoku.dir/src/errors.c.o
  /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/errors.c
@@ -33,6 +35,7 @@ CMakeFiles/tp1_sudoku.dir/src/main.c.o
  /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/main.h
  /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/server.h
  /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/types.h
+ /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/utils.h
 CMakeFiles/tp1_sudoku.dir/src/server.c.o
  /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_socket.h
  /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_sudoku.h
@@ -41,6 +44,7 @@ CMakeFiles/tp1_sudoku.dir/src/server.c.o
  /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/server.c
  /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/server.h
  /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/types.h
+ /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/utils.h
 CMakeFiles/tp1_sudoku.dir/src/utils.c.o
  /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/utils.c
  /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/utils.h

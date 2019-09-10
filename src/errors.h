@@ -2,10 +2,7 @@
 #define ERRORS__H
 #include <stdio.h>
 #include "types.h"
-#define MAX_ERRORS 12
-
-#define MSG_OK "OK\n"
-#define MSG_ERROR "ERROR\n"
+#define MAX_ERRORS 13
 
 /* PROGRAM INVOCATION */
 #define MSG_ERROR_PROGRAM_INVOCATION "Modo no soportado, el primer parámetro debe ser server o client\n"
@@ -29,5 +26,6 @@
 #define MSG_ERROR_OPENING_FILE "No se pudo abrir el archivo.\n"
 
 status_t print_error_msg(status_t code);
+char* get_error_msg(status_t code);
 
 #endif

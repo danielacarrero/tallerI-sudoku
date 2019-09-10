@@ -17,6 +17,8 @@ stdint.h
 -
 types.h
 /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/types.h
+utils.h
+/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/utils.h
 adt_vector.h
 /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_vector.h
 
@@ -24,11 +26,51 @@ adt_vector.h
 types.h
 /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/types.h
 
+/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/client.c
+stdio.h
+-
+string.h
+-
+stdbool.h
+-
+client.h
+/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/client.h
+
+/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/client.h
+types.h
+/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/types.h
+errors.h
+/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/errors.h
+adt_socket.h
+/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/adt_socket.h
+
 /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/errors.h
 stdio.h
 -
 types.h
 /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/types.h
+
+/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/main.c
+stdio.h
+-
+string.h
+-
+stdbool.h
+-
+main.h
+/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/main.h
+
+/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/main.h
+stdio.h
+-
+types.h
+/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/types.h
+errors.h
+/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/errors.h
+client.h
+/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/client.h
+server.h
+/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/server.h
 
 /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/server.c
 stdio.h
@@ -38,6 +80,8 @@ stdbool.h
 string.h
 -
 stdlib.h
+-
+arpa/inet.h
 -
 server.h
 /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/server.h
@@ -55,4 +99,6 @@ adt_sudoku.h
 /Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/types.h
 stdio.h
 -
+
+/Users/dcarrero/Documents/FIUBA/tallerI/TPs/TP1/tp1-sudoku/src/utils.h
 

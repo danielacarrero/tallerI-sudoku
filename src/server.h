@@ -13,6 +13,9 @@
 #define CMD_PUT 'P'
 #define CMD_VERIFY 'V'
 #define CMD_RESET 'R'
+#define ROW_PARAM_POS 1
+#define COL_PARAM_POS 2
+#define VALUE_PARAM_POS 3
 
 status_t init_server(const char *service);
 status_t init_socket(socket_t *socket, const char *service);

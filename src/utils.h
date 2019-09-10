@@ -1,6 +1,6 @@
 #ifndef UTILS__H
 #define UTILS__H
 
-void split(const char *string, char delim);
+bool has_repeated_values(size_t arr[], size_t len);
 
 #endif

@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include "types.h"
+#include "utils.h"
 #include "adt_vector.h"
 
 #define LEN_MAX_NUMBER 4
@@ -21,7 +22,8 @@
 #define DELIMITER_SUDOKU " "
 #define EMPTY_CELL 0
 #define MAX_NUM_COLS 9
-#define MAX_NUM_CELLS 81
+#define MAX_NUM_ROWS 9
+#define MAX_NUM_BIG_CELL 9
 
 typedef struct {
     size_t row;
@@ -36,10 +38,19 @@ typedef struct {
 
 status_t ADT_sudoku_init(sudoku_t **sudoku, FILE * fi );
 status_t ADT_sudoku_add_initial_cell(sudoku_t * sudoku, size_t row, size_t col, size_t value);
+status_t ADT_sudoku_put_value(sudoku_t *sudoku, size_t row, size_t col, size_t value);
 status_t ADT_sudoku_destroy(sudoku_t *sudoku);
+status_t ADT_sudoku_reset(sudoku_t *sudoku);
 status_t ADT_sudoku_format_printable(const sudoku_t *sudoku, char **printable, size_t size);
 bool ADT_sudoku_compare_cells(const void *c1, const void *c2);
 bool ADT_sudoku_compare_cell_position(const void *c1, const void *c2);
+bool ADT_sudoku_compare_cell_row(const void *c1, const void *c2);
+bool ADT_sudoku_compare_cell_col(const void *c1, const void *c2);
+status_t ADT_sudoku_copy_cell(const void *src, void **dst);
 status_t ADT_cell_destroy(void **c);
+status_t ADT_sudoku_verify(const sudoku_t *sudoku);
+status_t ADT_sudoku_verify_rows(const sudoku_t *sudoku);
+status_t ADT_sudoku_verify_cols(const sudoku_t *sudoku);
+status_t ADT_sudoku_verify_big_cells(const sudoku_t *sudoku);
 
 #endif

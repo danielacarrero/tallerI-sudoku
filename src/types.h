@@ -3,6 +3,9 @@
 
 #include <stdio.h>
 
+#define MSG_OK "OK\n"
+#define MSG_ERROR "ERROR\n"
+
 typedef enum {
     ERROR_PROGRAM_INVOCATION,
     ERROR_SERVER_PROGRAM_INVOCATION,
@@ -16,9 +19,11 @@ typedef enum {
     ERROR_CREATING_SUDOKU,
     ERROR_FORMATTING_SUDOKU,
     ERROR_OPENING_FILE,
+    ERROR_UNMODIFIABLE_CELL,
     ERROR_INVALID_DATA,
     ERROR_NULL_POINTER,
     ERROR_OUT_OF_MEMORY,
+    ERROR_NOT_FOUND,
     OK
 } status_t;
 

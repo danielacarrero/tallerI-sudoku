@@ -13,7 +13,8 @@ char* errors [MAX_ERRORS] = {
         MSG_ERROR_SOCKET_RECEIVING,
         MSG_ERROR_CREATING_SUDOKU,
         MSG_ERROR_FORMATTING_SUDOKU,
-        MSG_ERROR_OPENING_FILE
+        MSG_ERROR_OPENING_FILE,
+        MSG_ERROR_UNMODIFIABLE_CELL
 };
 
 status_t print_error_msg(status_t code) {
@@ -21,4 +22,10 @@ status_t print_error_msg(status_t code) {
         return ERROR_INVALID_DATA;
     fprintf(stderr, "%s", errors[code]);
     return OK;
+}
+
+char* get_error_msg(status_t code) {
+    if(code >= MAX_ERRORS)
+        return NULL;
+    return errors[code];
 }

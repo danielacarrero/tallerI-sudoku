@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
+#include <arpa/inet.h>
 #include "server.h"
 
 
@@ -132,12 +133,18 @@ status_t process_get_command(socket_t *socket, sudoku_t *sudoku) {
     printable[0] = '\0';
 
     if((st = ADT_sudoku_format_printable(sudoku, &printable, LEN_MAX_SUDOKU_TABLE)) != OK){
-        printf("Hubo un error con printable.\n");
         return st;
     }
 
     printf("size of printable: %lu\n", strlen(printable));
     printf("%s\n", printable);
+    char size[sizeof(strlen(printable))];
+    snprintf(size, sizeof(strlen(printable)),"%du", htons(strlen(printable)));
+
+    if((st = ADT_socket_connect(socket)) != OK)
+        return st;
+    if((st = ADT_socket_send(socket,  size, sizeof(strlen(printable)))) != OK)
+        return  st;
 
     free(printable);
     printable = NULL;
@@ -145,20 +152,44 @@ status_t process_get_command(socket_t *socket, sudoku_t *sudoku) {
 }
 
 status_t process_put_command(socket_t *socket, sudoku_t *sudoku, const char *buffer) {
+    status_t st;
+
     printf("Processing PUT command\n");
+    size_t row = (size_t) buffer[ROW_PARAM_POS] - 48;
+    size_t col = (size_t) buffer[COL_PARAM_POS] - 48;
+    size_t value = (size_t) buffer[VALUE_PARAM_POS] - 48;
+
+    if((st = ADT_sudoku_put_value(sudoku, row, col, value)) != OK){
+        return st;
+    }
+    if((st = process_get_command(socket, sudoku)) != OK)
+        return st;
+
     return OK;
 }
 
 status_t process_reset_command(socket_t *socket, sudoku_t *sudoku) {
-    //status_t st;
+    status_t st;
 
     printf("Processing RESET command\n");
 
+    if(((st = ADT_sudoku_reset(sudoku)) != OK))
+        return st;
+    if((st = process_get_command(socket, sudoku)) != OK)
+        return st;
 
     return OK;
 }
 
 status_t process_verify_command(socket_t *socket, sudoku_t *sudoku) {
+    status_t st;
     printf("Processing VERIFY command\n");
+
+    if((st = ADT_sudoku_verify(sudoku)) != OK) {
+        printf(MSG_ERROR);
+    } else {
+        printf(MSG_OK);
+    }
+
     return OK;
 }
