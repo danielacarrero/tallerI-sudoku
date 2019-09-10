@@ -81,15 +81,17 @@ status_t wait_and_receive(socket_t *socket, sudoku_t *sudoku) {
     status_t st = OK;
     int peer_fd = 0;
     int res = 0;
-    char buffer[MAX_LENGTH_RECEIVED];
-
-    memset(buffer, 0, MAX_LENGTH_RECEIVED);
+    char *buffer;
 
     if ((st = ADT_socket_accept(socket, &peer_fd)) != OK) {
         return st;
     }
 
-    while ((st = ADT_socket_receive(socket, peer_fd, &res, buffer, MAX_LENGTH_RECEIVED)) != ERROR_CLOSED_SOCKET) {
+    if((buffer = (char *) malloc(MAX_LENGTH_RECEIVED * sizeof(char))) == NULL)
+        return ERROR_OUT_OF_MEMORY;
+    memset(buffer, 0, MAX_LENGTH_RECEIVED);
+
+    while ((st = ADT_socket_receive(socket, peer_fd, &res, &buffer, MAX_LENGTH_RECEIVED)) != ERROR_CLOSED_SOCKET) {
         if (res != MAX_LENGTH_RECEIVED) {
             buffer[res + 1] = '\0';
         }
@@ -103,6 +105,8 @@ status_t wait_and_receive(socket_t *socket, sudoku_t *sudoku) {
 
         memset(&buffer, 0, MAX_LENGTH_RECEIVED);
     }
+    free(buffer);
+    buffer = NULL;
 
     return st;
 }
@@ -135,16 +139,16 @@ status_t process_get_command(socket_t *socket, sudoku_t *sudoku) {
     if((st = ADT_sudoku_format_printable(sudoku, &printable, LEN_MAX_SUDOKU_TABLE)) != OK){
         return st;
     }
-
     printf("size of printable: %lu\n", strlen(printable));
     printf("%s\n", printable);
     char size[sizeof(strlen(printable))];
     snprintf(size, sizeof(strlen(printable)),"%du", htons(strlen(printable)));
 
-    if((st = ADT_socket_connect(socket)) != OK)
+    if ((st = ADT_socket_send(socket,  size, sizeof(size))) != OK)
         return st;
-    if((st = ADT_socket_send(socket,  size, sizeof(strlen(printable)))) != OK)
-        return  st;
+
+    if ((st = ADT_socket_send(socket, printable, strlen(printable))) != OK)
+        return st;
 
     free(printable);
     printable = NULL;

@@ -75,32 +75,34 @@ status_t process_get(socket_t *socket) {
 
 status_t receive(socket_t *socket) {
     status_t st = OK;
-    int peer_fd = 0;
     int res = 0;
-    char buffer[MAX_SMALL_BUF_LEN];
+    char *buffer;
     char *temp;
     int next_len;
     int next_res = 0;
+    char *next_buffer;
 
+    if((buffer = (char *) malloc(MAX_SMALL_BUF_LEN * sizeof(char))) == NULL)
+        return ERROR_OUT_OF_MEMORY;
 
-    if ((st = ADT_socket_bind_and_listen(socket)) != OK)
-        return st;
-    if ((st = ADT_socket_accept(socket, &peer_fd)) != OK)
-        return st;
+    if((st = ADT_socket_receive(socket, socket->file_descriptor, &res, &buffer, MAX_SMALL_BUF_LEN)) == OK) {
 
-    if((st = ADT_socket_receive(socket, peer_fd, &res, buffer, MAX_SMALL_BUF_LEN)) == OK) {
-        /*if (res != MAX_SMALL_BUF_LEN) {
-            buffer[res + 1] = '\0';
-        }*/
+        printf("recibe\n");
+        next_len = (int) ntohs(strtol(buffer, &temp, 10));
+        if((next_buffer = (char *) malloc((next_len + 1) * sizeof(char))) == NULL)
+            return ERROR_OUT_OF_MEMORY;
 
-        next_len = ntohs(strtol(buffer, &temp, 10));
-        char next_buffer[next_len];
+        next_buffer[0] = '\0';
+        printf("nexT_len: %d", next_len);
 
-        if ((st = ADT_socket_receive(socket, peer_fd, &next_res, next_buffer, next_len)) != OK) {
+        if ((st = ADT_socket_receive(socket, socket->file_descriptor, &next_res, &next_buffer, next_len)) != OK) {
             return st;
         }
+        next_buffer[next_res + 1] = '\0';
 
-        printf("%s", next_buffer);
+        printf("%s\n", next_buffer);
+        free(next_buffer);
+        next_buffer = NULL;
     }
 
     return st;

@@ -109,6 +109,7 @@ status_t ADT_socket_bind_and_listen(socket_t *adt_socket) {
 }
 
 status_t ADT_socket_send(socket_t *adt_socket, const char *buffer, size_t length) {
+    printf("sending\n");
     int sent = 0;
     int res = 0;
 
@@ -131,18 +132,18 @@ status_t ADT_socket_send(socket_t *adt_socket, const char *buffer, size_t length
     return OK;
 }
 
-status_t ADT_socket_receive(socket_t *adt_socket, int peer_fd, int *res, char *buffer, size_t length) {
+status_t ADT_socket_receive(socket_t *adt_socket, int peer_fd, int *res, char **buffer, size_t length) {
     int received = 0;
     int buff_len = 0;
     status_t st = OK;
 
-    memset(buffer, 0, length);
-
     if (adt_socket == NULL || buffer == NULL)
         return ERROR_NULL_POINTER;
 
+    memset(*buffer, 0, length);
+
     while(received < length) {
-        *res = recv(peer_fd, &buffer[received], length - received, 0);
+        *res = recv(peer_fd, buffer[received], length - received, 0);
 
         if (*res == CLOSED_SOCKET) {
             shutdown(peer_fd, SHUT_RDWR);
@@ -156,7 +157,7 @@ status_t ADT_socket_receive(socket_t *adt_socket, int peer_fd, int *res, char *b
             st = ERROR_SOCKET_RECEIVING;
             break;
         } else {
-            buff_len = atoi(buffer);
+            buff_len = atoi(*buffer);
             if (buff_len == 0) {
                 printf("Recibiendo 0 bytes.\n");
                 break;
@@ -176,6 +177,7 @@ status_t ADT_socket_accept(socket_t *adt_socket, int *peer_fd) {
         return ERROR_NULL_POINTER;
 
     *peer_fd = accept(adt_socket->file_descriptor, NULL, NULL);
+    adt_socket->file_descriptor = *peer_fd;
 
     if (*peer_fd == INVALID_FD) {
         printf("Error: %s\n", strerror(errno));

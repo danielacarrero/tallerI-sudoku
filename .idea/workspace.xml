@@ -13,7 +13,16 @@
   <component name="ChangeListManager">
     <list default="true" id="c4b284d0-58a7-4e22-8a8d-9badc6ffcb56" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/C.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tp1_sudoku.dir/C.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/tp1_sudoku" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/tp1_sudoku" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/adt_socket.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/adt_socket.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/adt_socket.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/adt_socket.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/adt_socket.o" beforeDir="false" afterPath="$PROJECT_DIR$/src/adt_socket.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/client.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client.o" beforeDir="false" afterPath="$PROJECT_DIR$/src/client.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/server.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server.o" beforeDir="false" afterPath="$PROJECT_DIR$/src/server.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tp" beforeDir="false" afterPath="$PROJECT_DIR$/src/tp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -76,7 +85,7 @@
       <option name="presentableId" value="Default" />
       <updated>1567647890905</updated>
       <workItem from="1567647892181" duration="6403000" />
-      <workItem from="1567902967535" duration="92943000" />
+      <workItem from="1567902967535" duration="99105000" />
     </task>
     <servers />
   </component>
@@ -106,7 +115,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/server.c</url>
-          <line>177</line>
+          <line>181</line>
           <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -125,19 +134,39 @@
           <option name="timeStamp" value="43" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/server.c</url>
+          <line>144</line>
+          <option name="timeStamp" value="54" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/client.c</url>
+          <line>97</line>
+          <option name="timeStamp" value="55" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/client.c</url>
+          <line>102</line>
+          <option name="timeStamp" value="56" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/server.c</url>
+          <line>93</line>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/server.c</url>
+          <line>141</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/server.c</url>
+          <line>89</line>
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/adt_socket.c</url>
-          <line>172</line>
-          <option name="timeStamp" value="47" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/client.c</url>
-          <line>88</line>
-          <option name="timeStamp" value="48" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/client.c</url>
-          <line>85</line>
-          <option name="timeStamp" value="49" />
+          <line>147</line>
+          <option name="timeStamp" value="61" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
