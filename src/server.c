@@ -57,6 +57,7 @@ status_t init_sudoku(sudoku_t **sudoku) {
 
     if ((fi = fopen(SUDOKU_FILE_PATH, "rt")) == NULL)
         return ERROR_OPENING_FILE;
+
     if((st = ADT_sudoku_init(sudoku, fi)) != OK) {
         fclose(fi);
         return st;
@@ -95,15 +96,13 @@ status_t wait_and_receive(socket_t *socket, sudoku_t *sudoku) {
         if (res != MAX_LENGTH_RECEIVED) {
             buffer[res + 1] = '\0';
         }
-        printf("buffer size: %d\n", res);
-        printf("comando: %s\n", buffer);
 
         if((st = process_command_received(socket ,sudoku, buffer)) != OK){
             print_error_msg(st);
             return st;
         }
 
-        memset(&buffer, 0, MAX_LENGTH_RECEIVED);
+        memset(buffer, 0, MAX_LENGTH_RECEIVED);
     }
     free(buffer);
     buffer = NULL;
@@ -139,7 +138,6 @@ status_t process_get_command(socket_t *socket, sudoku_t *sudoku) {
     if((st = ADT_sudoku_format_printable(sudoku, &printable, LEN_MAX_SUDOKU_TABLE)) != OK){
         return st;
     }
-    printf("size of printable: %lu\n", strlen(printable));
     printf("%s\n", printable);
     char size[sizeof(strlen(printable))];
     snprintf(size, sizeof(strlen(printable)),"%du", htons(strlen(printable)));
@@ -189,11 +187,16 @@ status_t process_verify_command(socket_t *socket, sudoku_t *sudoku) {
     status_t st;
     printf("Processing VERIFY command\n");
 
-    if((st = ADT_sudoku_verify(sudoku)) != OK) {
-        printf(MSG_ERROR);
-    } else {
-        printf(MSG_OK);
-    }
+    char *msg = (ADT_sudoku_verify(sudoku) != OK) ? MSG_ERROR : MSG_OK;
+
+    char size[sizeof(strlen(msg))];
+    snprintf(size, sizeof(strlen(msg)),"%du", htons(strlen(msg)));
+
+    if ((st = ADT_socket_send(socket,  size, sizeof(size))) != OK)
+        return st;
+
+    if ((st = ADT_socket_send(socket, msg, strlen(msg))) != OK)
+        return st;
 
     return OK;
 }

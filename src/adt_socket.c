@@ -26,7 +26,8 @@ status_t ADT_socket_init(socket_t *adt_socket, socket_type_t type) {
     hints.ai_addr = NULL;
     hints.ai_next = NULL;
 
-    if ((res = getaddrinfo(adt_socket->host, adt_socket->service, &hints, &(adt_socket->addrinfo_res))) != GETADDRINFO_SUCCESSFUL) {
+    if ((res = getaddrinfo(adt_socket->host, adt_socket->service,
+            &hints, &(adt_socket->addrinfo_res))) != GETADDRINFO_SUCCESSFUL) {
         perror(gai_strerror(res));
         return ERROR_INVALID_DATA;
     }

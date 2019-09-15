@@ -30,7 +30,6 @@ status_t init_client(const char *host, const char *service) {
 
 void process_input(socket_t *socket) {
     status_t st;
-    fprintf(stderr, "%s\n", "Process user input!! ");
     char buf[CMD_MAX_INPUT_SIZE];
     bool exit = false;
 
@@ -58,6 +57,9 @@ status_t process_command(socket_t *socket, char *buf) {
     if(!strncmp(CLIENT_CMD_GET, buf, strlen(CLIENT_CMD_GET))){
         return process_get(socket);
     }
+    if(!strncmp(CLIENT_CMD_VERIFY, buf, strlen(CLIENT_CMD_VERIFY))){
+        return process_verify(socket);
+    }
     return ERROR_INVALID_DATA;
 }
 
@@ -69,6 +71,19 @@ status_t process_get(socket_t *socket) {
 
     if((st = receive(socket)) != OK)
         return st;
+
+    return OK;
+}
+
+status_t process_verify(socket_t *socket) {
+    status_t st;
+
+    if((st = ADT_socket_send(socket, SERVER_CMD_VERIFY, sizeof(SERVER_CMD_VERIFY))) != OK)
+        return st;
+
+    if((st = receive(socket)) != OK)
+        return st;
+
 
     return OK;
 }
@@ -87,7 +102,6 @@ status_t receive(socket_t *socket) {
 
     if((st = ADT_socket_receive(socket, socket->file_descriptor, &res, &buffer, MAX_SMALL_BUF_LEN)) == OK) {
 
-        printf("recibe\n");
         next_len = (int) ntohs(strtol(buffer, &temp, 10));
         if((next_buffer = (char *) malloc((next_len + 1) * sizeof(char))) == NULL)
             return ERROR_OUT_OF_MEMORY;

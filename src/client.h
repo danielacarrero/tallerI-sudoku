@@ -6,7 +6,7 @@
 #include "adt_socket.h"
 
 #define CMD_MAX_INPUT_SIZE 15
-#define MAX_SMALL_BUF_LEN 5
+#define MAX_SMALL_BUF_LEN 277
 #define CLIENT_CMD_EXIT "exit"
 #define CLIENT_CMD_GET "get"
 #define CLIENT_CMD_PUT "put"
@@ -22,5 +22,6 @@ void process_input(socket_t *socket);
 status_t process_command(socket_t *socket, char *buf);
 status_t receive(socket_t *socket);
 status_t process_get(socket_t *socket);
+status_t process_verify(socket_t *socket);
 
 #endif
