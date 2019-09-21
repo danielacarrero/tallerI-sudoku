@@ -177,14 +177,6 @@ status_t ADT_vector_copy(const vector_t *src, vector_t **dest) {
         return st;
     }
 
-    /*for (size_t i = 0; i < src->size; i++) {
-
-        if((st = ADT_vector_append(*dest, src->elements[i])) != OK)
-            return st;
-    }
-     */
-
-
     if((aux = (void **)malloc(sizeof(void *))) == NULL)
         return ERROR_OUT_OF_MEMORY;
 

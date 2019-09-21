@@ -313,7 +313,7 @@ status_t ADT_sudoku_verify_rows(const sudoku_t *sudoku) {
 
     }
 
-    printf("rows OK\n");
+    //printf("rows OK\n");
     return OK;
 }
 
@@ -348,7 +348,7 @@ status_t ADT_sudoku_verify_cols(const sudoku_t *sudoku) {
 
     }
 
-    printf("cols OK\n");
+    //printf("cols OK\n");
     return OK;
 }
 
@@ -389,6 +389,6 @@ status_t ADT_sudoku_verify_big_cells(const sudoku_t *sudoku) {
         }
     }
 
-    printf("big cells OK\n");
+    //printf("big cells OK\n");
     return OK;
 }

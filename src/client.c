@@ -173,9 +173,6 @@ status_t receive(socket_t *socket) {
     long next_read_len;
     int32_t buff_len;
 
-    /*if((buffer = (char *) malloc(MAX_SMALL_BUF_LEN * sizeof(char))) == NULL)
-        return ERROR_OUT_OF_MEMORY;*/
-
     if((st = ADT_socket_receive(socket, socket->file_descriptor, &res, (char *) &buff_len, sizeof(buff_len), sizeof(buff_len))) == OK) {
 
         next_read_len = ntohl(buff_len);
@@ -183,7 +180,6 @@ status_t receive(socket_t *socket) {
             return ERROR_OUT_OF_MEMORY;
 
         next_buffer[0] = '\0';
-        printf("next_len: %ld\n", next_read_len);
 
         if ((st = ADT_socket_receive(socket, socket->file_descriptor, &next_res, next_buffer, next_read_len, next_read_len)) != OK) {
             return st;

@@ -108,7 +108,6 @@ status_t ADT_socket_bind_and_listen(socket_t *adt_socket) {
 }
 
 status_t ADT_socket_send(socket_t *adt_socket, const char *buffer, size_t length) {
-    printf("sending\n");
     int sent = 0;
     int res = 0;
 
@@ -124,7 +123,7 @@ status_t ADT_socket_send(socket_t *adt_socket, const char *buffer, size_t length
             return ERROR_SOCKET_SENDING;
         } else {
             sent += res;
-            fprintf(stdout, "Enviando %i/%zu bytes\n", res, length);
+            //fprintf(stdout, "Enviando %i/%zu bytes\n", res, length);
         }
     }
 
@@ -157,12 +156,12 @@ status_t ADT_socket_receive(socket_t *adt_socket, int peer_fd, int *received, ch
             st = ERROR_SOCKET_RECEIVING;
             break;
         } else {
-            fprintf(stdout, "Recibiendo %i/%zu bytes\n", res, length);
+            //fprintf(stdout, "Recibiendo %i/%zu bytes\n", res, length);
             *received += res;
 
             buff_len = strtol(buffer, &temp, 10);
             if (buff_len == 0 && *received >= min_length) {
-                printf("Recibiendo 0 bytes.\n");
+                //printf("Recibiendo 0 bytes.\n");
                 break;
             }
         }
