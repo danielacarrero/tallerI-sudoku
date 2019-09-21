@@ -139,7 +139,7 @@ status_t process_get_command(server_t *server) {
     uint32_t max_table_send = htonl(LEN_MAX_SUDOKU_TABLE);
     char *size = (char *) &max_table_send;
 
-    if((printable = (char *) malloc(LEN_MAX_SUDOKU_TABLE * sizeof(char))) == NULL)
+    if((printable = (char *) malloc((LEN_MAX_SUDOKU_TABLE + 1) * sizeof(char))) == NULL)
         return ERROR_OUT_OF_MEMORY;
     printable[0] = '\0';
 
