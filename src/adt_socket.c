@@ -41,6 +41,10 @@ status_t ADT_socket_destroy(socket_t *adt_socket) {
 
     shutdown(adt_socket->file_descriptor, SHUT_RDWR);
     close(adt_socket->file_descriptor);
+
+    free(adt_socket);
+    adt_socket = NULL;
+    
     return OK;
 }
 
