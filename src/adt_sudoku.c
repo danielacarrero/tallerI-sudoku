@@ -135,12 +135,11 @@ status_t ADT_sudoku_reset(sudoku_t *sudoku) {
     return OK;
 }
 
-status_t ADT_sudoku_format_printable(const sudoku_t *sudoku, char **printable, size_t size) {
+status_t ADT_sudoku_format_printable(const sudoku_t *sudoku, char **printable, size_t printable_len) {
     size_t row = 1;
     size_t col = 1;
     cell_t search_cell;
     cell_t *result_cell;
-    size_t printable_len = size;
     char cell_number[LEN_MAX_NUMBER];
 
     if (sudoku == NULL || printable == NULL)
@@ -150,11 +149,14 @@ status_t ADT_sudoku_format_printable(const sudoku_t *sudoku, char **printable, s
         return ERROR_FORMATTING_SUDOKU;
 
     strncat(*printable, SUDOKU_BIG_CELL_LIMIT_ROW, printable_len);
+    printable_len -= strlen(SUDOKU_BIG_CELL_LIMIT_ROW);
     for (size_t t_row = 1; t_row <= SUDOKU_MAX_NUM_TABLE_ROWS; t_row ++) {
         if(t_row % 6 == 0) {
             strncat(*printable, SUDOKU_BIG_CELL_LIMIT_ROW, printable_len);
+            printable_len -= strlen(SUDOKU_BIG_CELL_LIMIT_ROW);
         } else if(t_row % 2){
             strncat(*printable, SUDOKU_INIT_TABLE_ROW, printable_len);
+            printable_len -= strlen(SUDOKU_INIT_TABLE_ROW);
             for(col = 1; col <= MAX_NUM_COLS; col ++) {
                 search_cell.row = row;
                 search_cell.col = col;
@@ -162,22 +164,28 @@ status_t ADT_sudoku_format_printable(const sudoku_t *sudoku, char **printable, s
                 result_cell = (cell_t *) ADT_vector_search(sudoku->current_cells, &search_cell);
                 if (result_cell == NULL){
                     strncat(*printable, SUDOKU_EMPTY_CELL, printable_len);
+                    printable_len -= strlen(SUDOKU_EMPTY_CELL);
                 } else {
                     snprintf(cell_number, LEN_MAX_NUMBER,"%zu", (size_t) result_cell->value);
                     strncat(*printable, cell_number, printable_len);
+                    printable_len -= strlen(cell_number);
                 }
 
                 if (col == MAX_NUM_COLS) {
                     strncat(*printable, SUDOKU_FINISH_TABLE_ROW, printable_len);
+                    printable_len -= strlen(SUDOKU_FINISH_TABLE_ROW);
                 } else if (col % 3 == 0){
                     strncat(*printable, SUDOKU_BIG_CELL_LIMIT_COL, printable_len);
+                    printable_len -= strlen(SUDOKU_BIG_CELL_LIMIT_COL);
                 } else {
                     strncat(*printable, SUDOKU_LIMIT_COL, printable_len);
+                    printable_len -= strlen(SUDOKU_LIMIT_COL);
                 }
             }
             row ++;
         } else {
             strncat(*printable, SUDOKU_LIMIT_ROW, printable_len);
+            printable_len -= strlen(SUDOKU_LIMIT_ROW);
         }
 
     }
