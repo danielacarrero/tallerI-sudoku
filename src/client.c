@@ -179,7 +179,7 @@ status_t receive(socket_t *socket) {
         if((next_buffer = (char *) malloc((next_read_len + 2) * sizeof(char))) == NULL)
             return ERROR_OUT_OF_MEMORY;
 
-        next_buffer[0] = '\0';
+        memset(next_buffer, 0, next_read_len + 2);
 
         if ((st = ADT_socket_receive(socket, socket->file_descriptor, &next_res, next_buffer, next_read_len, next_read_len)) != OK) {
             return st;
