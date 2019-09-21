@@ -13,7 +13,6 @@ status_t init_server(const char *service) {
 
     if((st = init_socket(&socket, service)) != OK)
         return st;
-    fprintf(stdout, "%s\n", "Server inicializado! :)");
 
     if((st = init_sudoku(&sudoku)) != OK){
         ADT_socket_destroy(&socket);
@@ -33,7 +32,6 @@ status_t init_server(const char *service) {
 
 status_t init_socket(socket_t *socket, const char *service) {
     status_t st;
-    printf("init socket\n");
 
     if (socket == NULL || service == NULL)
         return ERROR_NULL_POINTER;
@@ -82,17 +80,15 @@ status_t wait_and_receive(socket_t *socket, sudoku_t *sudoku) {
     status_t st = OK;
     int peer_fd = 0;
     int res = 0;
-    char *buffer;
+    char buffer[MAX_LENGTH_RECEIVED];
 
     if ((st = ADT_socket_accept(socket, &peer_fd)) != OK) {
         return st;
     }
 
-    if((buffer = (char *) malloc(MAX_LENGTH_RECEIVED * sizeof(char))) == NULL)
-        return ERROR_OUT_OF_MEMORY;
     memset(buffer, 0, MAX_LENGTH_RECEIVED);
 
-    while ((st = ADT_socket_receive(socket, peer_fd, &res, &buffer, MAX_LENGTH_RECEIVED)) != ERROR_CLOSED_SOCKET) {
+    while ((st = ADT_socket_receive(socket, peer_fd, &res, buffer, MAX_LENGTH_RECEIVED, MIN_LENGTH_RECEIVED)) != ERROR_CLOSED_SOCKET) {
         if (res != MAX_LENGTH_RECEIVED) {
             buffer[res + 1] = '\0';
         }
@@ -103,9 +99,8 @@ status_t wait_and_receive(socket_t *socket, sudoku_t *sudoku) {
         }
 
         memset(buffer, 0, MAX_LENGTH_RECEIVED);
+        res = 0;
     }
-    free(buffer);
-    buffer = NULL;
 
     return st;
 }
@@ -130,6 +125,9 @@ status_t process_get_command(socket_t *socket, sudoku_t *sudoku) {
 
     printf("Processing GET command\n");
     char *printable;
+    uint32_t max_table_send = htonl(LEN_MAX_SUDOKU_TABLE);
+    char *size = (char *) &max_table_send;
+    //int length = snprintf(NULL, 0,"%d",LEN_MAX_SUDOKU_TABLE);
 
     if((printable = (char *) malloc(LEN_MAX_SUDOKU_TABLE * sizeof(char))) == NULL)
         return ERROR_OUT_OF_MEMORY;
@@ -139,15 +137,21 @@ status_t process_get_command(socket_t *socket, sudoku_t *sudoku) {
         return st;
     }
     printf("%s\n", printable);
-    char size[sizeof(strlen(printable))];
-    snprintf(size, sizeof(strlen(printable)),"%du", htons(strlen(printable)));
 
-    if ((st = ADT_socket_send(socket,  size, sizeof(size))) != OK)
+    /*if((size = (char *) malloc((length + 1) * sizeof(char))) == NULL)
+        return ERROR_OUT_OF_MEMORY;
+*/
+    //snprintf(size, length + 1,"%du", htons(LEN_MAX_SUDOKU_TABLE));
+
+
+    if ((st = ADT_socket_send(socket,  size, sizeof(max_table_send))) != OK)
         return st;
 
     if ((st = ADT_socket_send(socket, printable, strlen(printable))) != OK)
         return st;
 
+    //free(size);
+    //size = NULL;
     free(printable);
     printable = NULL;
     return OK;
@@ -157,17 +161,33 @@ status_t process_put_command(socket_t *socket, sudoku_t *sudoku, const char *buf
     status_t st;
 
     printf("Processing PUT command\n");
-    size_t row = (size_t) buffer[ROW_PARAM_POS] - 48;
-    size_t col = (size_t) buffer[COL_PARAM_POS] - 48;
-    size_t value = (size_t) buffer[VALUE_PARAM_POS] - 48;
+    size_t row = (size_t) buffer[ROW_PARAM_POS];
+    size_t col = (size_t) buffer[COL_PARAM_POS];
+    size_t value = (size_t) buffer[VALUE_PARAM_POS];
 
-    if((st = ADT_sudoku_put_value(sudoku, row, col, value)) != OK){
-        return st;
+    st = ADT_sudoku_put_value(sudoku, row, col, value);
+
+    if (st == ERROR_UNMODIFIABLE_CELL) {
+
+        char *msg = MSG_ERROR_UNMODIFIABLE_CELL;
+        unsigned long msg_size = strlen(msg);
+        int32_t max_will_send = htonl(msg_size);
+        char *size = (char *) &max_will_send;
+
+        if ((st = ADT_socket_send(socket, size, sizeof(max_will_send))) != OK)
+            return st;
+
+        if ((st = ADT_socket_send(socket, msg, strlen(msg))) != OK)
+            return st;
+
+        return OK;
+
+    } else if (st == OK) {
+        if ((st = process_get_command(socket, sudoku)) != OK)
+            return st;
     }
-    if((st = process_get_command(socket, sudoku)) != OK)
-        return st;
 
-    return OK;
+    return st;
 }
 
 status_t process_reset_command(socket_t *socket, sudoku_t *sudoku) {
@@ -186,13 +206,18 @@ status_t process_reset_command(socket_t *socket, sudoku_t *sudoku) {
 status_t process_verify_command(socket_t *socket, sudoku_t *sudoku) {
     status_t st;
     printf("Processing VERIFY command\n");
+    unsigned long msg_size;
+    int32_t max_will_send;
+    char *size = (char *) &max_will_send;
 
     char *msg = (ADT_sudoku_verify(sudoku) != OK) ? MSG_ERROR : MSG_OK;
 
-    char size[sizeof(strlen(msg))];
-    snprintf(size, sizeof(strlen(msg)),"%du", htons(strlen(msg)));
+    /*char size[sizeof(strlen(msg))];
+    snprintf(size, sizeof(strlen(msg)),"%du", htons(strlen(msg)));*/
+    msg_size = strlen(msg);
+    max_will_send = htonl(msg_size);
 
-    if ((st = ADT_socket_send(socket,  size, sizeof(size))) != OK)
+    if ((st = ADT_socket_send(socket,  size, sizeof(max_will_send))) != OK)
         return st;
 
     if ((st = ADT_socket_send(socket, msg, strlen(msg))) != OK)

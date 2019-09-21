@@ -14,7 +14,9 @@ char* errors [MAX_ERRORS] = {
         MSG_ERROR_CREATING_SUDOKU,
         MSG_ERROR_FORMATTING_SUDOKU,
         MSG_ERROR_OPENING_FILE,
-        MSG_ERROR_UNMODIFIABLE_CELL
+        MSG_ERROR_UNMODIFIABLE_CELL,
+        MSG_ERROR_UNSUPPORTED_INDICES,
+        MSG_ERROR_UNSUPPORTED_VALUE
 };
 
 status_t print_error_msg(status_t code) {

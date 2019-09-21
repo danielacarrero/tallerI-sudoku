@@ -41,7 +41,6 @@ status_t ADT_socket_destroy(socket_t *adt_socket) {
 
     shutdown(adt_socket->file_descriptor, SHUT_RDWR);
     close(adt_socket->file_descriptor);
-    fprintf(stdout, "%s%d\n", "File Descriptor cerrado: ", adt_socket->file_descriptor);
     return OK;
 }
 
@@ -64,7 +63,6 @@ status_t ADT_socket_connect(socket_t *adt_socket) {
             printf("Error: %s\n", strerror(errno));
             close(fd);
         } else {
-            fprintf(stdout, "Conectado.\n");
             adt_socket->file_descriptor = fd;
             connected = true;
         }
@@ -133,39 +131,40 @@ status_t ADT_socket_send(socket_t *adt_socket, const char *buffer, size_t length
     return OK;
 }
 
-status_t ADT_socket_receive(socket_t *adt_socket, int peer_fd, int *res, char **buffer, size_t length) {
-    int received = 0;
-    int buff_len = 0;
+status_t ADT_socket_receive(socket_t *adt_socket, int peer_fd, int *received, char *buffer, size_t length, size_t min_length) {
+    int res = 0;
+    long buff_len = 0;
+    char *temp;
     status_t st = OK;
 
     if (adt_socket == NULL || buffer == NULL)
         return ERROR_NULL_POINTER;
 
-    memset(*buffer, 0, length);
+    memset(buffer, 0, length);
 
-    while(received < length) {
-        *res = recv(peer_fd, buffer[received], length - received, 0);
+    while(*received < length) {
+        res = recv(peer_fd, &buffer[*received], length - *received, 0);
 
-        if (*res == CLOSED_SOCKET) {
+        if (res == CLOSED_SOCKET) {
             shutdown(peer_fd, SHUT_RDWR);
             close(peer_fd);
             st = ERROR_CLOSED_SOCKET;
             break;
-        } else if (*res == ERROR_SOCKET) {
+        } else if (res == ERROR_SOCKET) {
             printf("Error: %s\n", strerror(errno));
             shutdown(peer_fd, SHUT_RDWR);
             close(peer_fd);
             st = ERROR_SOCKET_RECEIVING;
             break;
         } else {
-            buff_len = atoi(*buffer);
-            if (buff_len == 0) {
+            fprintf(stdout, "Recibiendo %i/%zu bytes\n", res, length);
+            *received += res;
+
+            buff_len = strtol(buffer, &temp, 10);
+            if (buff_len == 0 && *received >= min_length) {
                 printf("Recibiendo 0 bytes.\n");
                 break;
             }
-
-            fprintf(stdout, "Recibiendo %i/%zu bytes\n", *res, length);
-            received += *res;
         }
     }
 

@@ -2,7 +2,7 @@
 #define ERRORS__H
 #include <stdio.h>
 #include "types.h"
-#define MAX_ERRORS 13
+#define MAX_ERRORS 15
 
 /* PROGRAM INVOCATION */
 #define MSG_ERROR_PROGRAM_INVOCATION "Modo no soportado, el primer parámetro debe ser server o client\n"

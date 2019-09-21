@@ -91,7 +91,7 @@ status_t ADT_sudoku_put_value(sudoku_t *sudoku, size_t row, size_t col, size_t v
     new_cell->col = col;
     new_cell->value = value;
 
-    if ((st = ADT_vector_set_searcher(sudoku->initial_cells, ADT_sudoku_compare_cells)) != OK)
+    if ((st = ADT_vector_set_searcher(sudoku->initial_cells, ADT_sudoku_compare_cell_position)) != OK)
         return st;
     if ((st = ADT_vector_set_searcher(sudoku->current_cells, ADT_sudoku_compare_cell_position)) != OK)
         return st;
@@ -123,7 +123,6 @@ status_t ADT_sudoku_destroy(sudoku_t *sudoku) {
     free(sudoku);
     sudoku = NULL;
 
-    printf("Sudoku destruido!\n");
     return OK;
 }
 

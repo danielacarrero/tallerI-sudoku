@@ -7,6 +7,7 @@
 #include "adt_sudoku.h"
 
 #define MAX_LENGTH_RECEIVED 5
+#define MIN_LENGTH_RECEIVED 2
 
 #define SUDOKU_FILE_PATH "../src/board.txt"
 #define CMD_GET 'G'
