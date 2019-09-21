@@ -44,7 +44,7 @@ status_t ADT_socket_destroy(socket_t *adt_socket) {
 
     free(adt_socket);
     adt_socket = NULL;
-    
+
     return OK;
 }
 

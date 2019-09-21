@@ -191,5 +191,8 @@ status_t ADT_vector_copy(const vector_t *src, vector_t **dest) {
     (*dest)->copier = src->copier;
     (*dest)->searcher = src->searcher;
 
+    free(aux);
+    aux = NULL;
+
     return OK;
 }
