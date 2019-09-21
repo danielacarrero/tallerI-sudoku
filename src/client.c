@@ -176,7 +176,7 @@ status_t receive(socket_t *socket) {
     if((st = ADT_socket_receive(socket, socket->file_descriptor, &res, (char *) &buff_len, sizeof(buff_len), sizeof(buff_len))) == OK) {
 
         next_read_len = ntohl(buff_len);
-        if((next_buffer = (char *) malloc((next_read_len + 1) * sizeof(char))) == NULL)
+        if((next_buffer = (char *) malloc((next_read_len + 2) * sizeof(char))) == NULL)
             return ERROR_OUT_OF_MEMORY;
 
         next_buffer[0] = '\0';
