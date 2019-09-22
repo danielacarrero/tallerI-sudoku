@@ -43,6 +43,7 @@ static status_t add_initial_cell(sudoku_t * sudoku,
 
 status_t sudoku_init(sudoku_t **sudoku, FILE * fi ) {
     char row_line[LEN_MAX_SUDOKU_LINE];
+    char *row_line_temp;
     char *iter;
     char *temp;
     bool eof = false;
@@ -68,13 +69,13 @@ status_t sudoku_init(sudoku_t **sudoku, FILE * fi ) {
         col = 1;
         if (fgets(row_line, LEN_MAX_SUDOKU_LINE, fi) == NULL)
             eof = true;
-        iter = strtok(row_line, DELIMITER_SUDOKU);
+        iter = strtok_r(row_line, DELIMITER_SUDOKU, &row_line_temp);
         while (iter != NULL && !eof) {
             value = (size_t) strtol(iter, &temp, 10);
             if (add_initial_cell(*sudoku, row, col, value) != OK){
                 return ERROR_CREATING_SUDOKU;
             }
-            iter = strtok(NULL, DELIMITER_SUDOKU);
+            iter = strtok_r(NULL, DELIMITER_SUDOKU, &row_line_temp);
             col ++;
         }
         row ++;
@@ -95,20 +96,23 @@ status_t sudoku_init(sudoku_t **sudoku, FILE * fi ) {
     return OK;
 }
 
-status_t sudoku_put_value(sudoku_t *sudoku, size_t row, size_t col, size_t value) {
+status_t sudoku_put_value(sudoku_t *sudoku,
+                          size_t row,
+                          size_t col,
+                          size_t val) {
     cell_t *new_cell;
     status_t st = OK;
 
     if (sudoku == NULL)
         return ERROR_NULL_POINTER;
-    if (value == EMPTY_CELL)
+    if (val == EMPTY_CELL)
         return OK;
     if ((new_cell = (cell_t*)malloc(sizeof(cell_t))) == NULL)
         return ERROR_OUT_OF_MEMORY;
 
     new_cell->row = row;
     new_cell->col = col;
-    new_cell->value = value;
+    new_cell->value = val;
 
     st = vector_set_searcher(sudoku->initial_cells,
             sudoku_compare_cell_position);
@@ -179,7 +183,7 @@ status_t sudoku_fmt_printable(const sudoku_t *sudoku, char **out, size_t len) {
         if (t_row % 6 == 0) {
             strncat(*out, SUDOKU_BIG_CELL_LIMIT_ROW, len);
             len -= strlen(SUDOKU_BIG_CELL_LIMIT_ROW);
-        } else if(t_row % 2) {
+        } else if (t_row % 2) {
             strncat(*out, SUDOKU_INIT_TABLE_ROW, len);
             len -= strlen(SUDOKU_INIT_TABLE_ROW);
             for (col = 1; col <= MAX_NUM_COLS; col ++) {
@@ -218,7 +222,6 @@ status_t sudoku_fmt_printable(const sudoku_t *sudoku, char **out, size_t len) {
             strncat(*out, SUDOKU_LIMIT_ROW, len);
             len -= strlen(SUDOKU_LIMIT_ROW);
         }
-
     }
     return OK;
 }
@@ -258,7 +261,7 @@ status_t sudoku_copy_cell(const void *src, void **dst) {
 status_t cell_destroy(void **c) {
     cell_t **ct = (cell_t **) c;
 
-    if(ct == NULL)
+    if (ct == NULL)
         return ERROR_NULL_POINTER;
 
     free(*ct);
@@ -308,7 +311,6 @@ static status_t sudoku_verify_rows(const sudoku_t *sudoku) {
 
         if (has_repeated_values(values_in_row, values_in_row_size))
             return ERROR_INVALID_DATA;
-
     }
 
     return OK;
@@ -364,7 +366,6 @@ static status_t sudoku_verify_big_cells(const sudoku_t *sudoku) {
 
     for (size_t big_cell_row = 1; big_cell_row <= 3; big_cell_row ++) {
         for (size_t big_cell_col = 1; big_cell_col <= 3; big_cell_col ++) {
-
             memset(values, 0, sizeof(values));
             values_size = 0;
             size_t init_row = (big_cell_row == 1) ? 1 :
