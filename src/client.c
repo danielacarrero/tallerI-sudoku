@@ -8,12 +8,14 @@
 status_t init_client(const char *host, const char *service) {
     client_t *client;
     struct addrinfo *addrinfo_res;
-    status_t st;
+    status_t st = OK;
 
-    if ((client = (client_t*)malloc(sizeof(client_t))) == NULL)
+    client = (client_t*)malloc(sizeof(client_t));
+    if (client == NULL)
         return ERROR_OUT_OF_MEMORY;
 
-    if((client->socket = (socket_t*)malloc(sizeof(socket_t))) == NULL)
+    client->socket = (socket_t*)malloc(sizeof(socket_t));
+    if (client->socket == NULL)
         return ERROR_OUT_OF_MEMORY;
 
     client->socket->host = host;
@@ -21,17 +23,14 @@ status_t init_client(const char *host, const char *service) {
 
     addrinfo_res = socket_init(client->socket, CLIENT);
 
-    if ((st = socket_connect(client->socket, addrinfo_res)) != OK) {
+    st = socket_connect(client->socket, addrinfo_res);
+    if (st != OK)
         return st;
-    }
 
     process_input(client);
 
-    if ((st = destroy_client(client)) != OK) {
-        return st;
-    }
-
-    return OK;
+    st = destroy_client(client);
+    return st;
 }
 
 status_t destroy_client(client_t *client) {
@@ -52,44 +51,40 @@ void process_input(client_t *client) {
     char buf[CMD_MAX_INPUT_SIZE];
     bool exit = false;
 
-    while(!exit){
-        if (fgets(buf, CMD_MAX_INPUT_SIZE, stdin) == NULL){
+    while (!exit){
+        if (fgets(buf, CMD_MAX_INPUT_SIZE, stdin) == NULL)
             return;
-        }
 
-        if (!strncmp(CLIENT_CMD_EXIT, buf, strlen(CLIENT_CMD_EXIT))){
+        if (!strncmp(CLIENT_CMD_EXIT, buf, strlen(CLIENT_CMD_EXIT)))
             exit = true;
-        }
 
-        if ((st = process_command(client, buf)) != OK)
+        st = process_command(client, buf);
+        if (st != OK)
             print_error_msg(st);
     }
 }
 
 status_t process_command(client_t *client, char *buf) {
-
-    if (!strncmp(CLIENT_CMD_GET, buf, strlen(CLIENT_CMD_GET))){
+    if (!strncmp(CLIENT_CMD_GET, buf, strlen(CLIENT_CMD_GET)))
         return process_get(client);
-    }
-    if (!strncmp(CLIENT_CMD_VERIFY, buf, strlen(CLIENT_CMD_VERIFY))){
+    if (!strncmp(CLIENT_CMD_VERIFY, buf, strlen(CLIENT_CMD_VERIFY)))
         return process_verify(client);
-    }
-    if (!strncmp(CLIENT_CMD_RESET, buf, strlen(CLIENT_CMD_RESET))){
+    if (!strncmp(CLIENT_CMD_RESET, buf, strlen(CLIENT_CMD_RESET)))
         return process_reset(client);
-    }
-    if (!strncmp(CLIENT_CMD_PUT, buf, strlen(CLIENT_CMD_PUT))) {
+    if (!strncmp(CLIENT_CMD_PUT, buf, strlen(CLIENT_CMD_PUT)))
         return process_put(client, buf);
-    }
     return ERROR_INVALID_DATA;
 }
 
 status_t process_get(client_t *client) {
     status_t st;
 
-    if((st = socket_send(client->socket, SERVER_CMD_GET, sizeof(SERVER_CMD_GET))) != OK)
+    st = socket_send(client->socket, SERVER_CMD_GET, sizeof(SERVER_CMD_GET));
+    if (st != OK)
         return st;
 
-    if((st = receive(client)) != OK)
+    st = receive(client);
+    if (st != OK)
         return st;
 
     return OK;
@@ -98,7 +93,10 @@ status_t process_get(client_t *client) {
 status_t process_verify(client_t *client) {
     status_t st;
 
-    if ((st = socket_send(client->socket, SERVER_CMD_VERIFY, sizeof(SERVER_CMD_VERIFY))) != OK)
+    st = socket_send(client->socket,
+            SERVER_CMD_VERIFY,
+            sizeof(SERVER_CMD_VERIFY));
+    if (st != OK)
         return st;
 
     if ((st = receive(client)) != OK)
@@ -111,7 +109,10 @@ status_t process_verify(client_t *client) {
 status_t process_reset(client_t *client) {
     status_t st;
 
-    if ((st = socket_send(client->socket, SERVER_CMD_RESET, sizeof(SERVER_CMD_RESET))) != OK)
+    st = socket_send(client->socket,
+            SERVER_CMD_RESET,
+            sizeof(SERVER_CMD_RESET));
+    if (st != OK)
         return st;
 
     if ((st = receive(client)) != OK)
@@ -130,32 +131,35 @@ status_t process_put(client_t *client, const char *buffer) {
     char *colRow = "";
     char *temp;
     char auxBuffer[CMD_MAX_INPUT_SIZE];
+    char *auxBufferTemp = auxBuffer;
+    char *colRowTemp = colRow;
     char msg[SERVER_MAX_PUT_LEN];
 
     memcpy(auxBuffer, buffer, CMD_MAX_INPUT_SIZE);
 
-    iter = strtok(auxBuffer, CMD_PUT_DELIMITER);
-    while(iter != NULL) {
+    iter = strtok_r(auxBuffer, CMD_PUT_DELIMITER, &auxBufferTemp);
+    while (iter != NULL) {
         if (argNum == 1)
             value = (uint8_t) strtol(iter, &temp, 10);
         if (argNum == 3)
             colRow = iter;
-        iter = strtok(NULL, CMD_PUT_DELIMITER);
+        iter = strtok_r(NULL, CMD_PUT_DELIMITER, &auxBufferTemp);
         argNum ++;
     }
 
     argNum = 0;
-    iter = strtok(colRow, CMD_PUT_COL_ROW_DELIM);
-    while(iter != NULL) {
+    iter = strtok_r(colRow, CMD_PUT_COL_ROW_DELIM, &colRowTemp);
+    while (iter != NULL) {
         if (argNum == 0)
             row = (uint8_t) strtol(iter, &temp, 10);
         if (argNum == 1)
             col = (uint8_t) strtol(iter, &temp, 10);
-        iter = strtok(NULL, CMD_PUT_COL_ROW_DELIM);
+        iter = strtok_r(NULL, CMD_PUT_COL_ROW_DELIM, &colRowTemp);
         argNum ++;
     }
 
-    if ((st = (validate_put_arguments(value, row, col))) != OK)
+    st = (validate_put_arguments(value, row, col));
+    if (st != OK)
         return st;
 
     msg[0] = SERVER_CMD_PUT[0];
@@ -163,16 +167,18 @@ status_t process_put(client_t *client, const char *buffer) {
     msg[2] = ((char *) &col)[0];
     msg[3] = ((char * ) &value)[0];
 
-    if ((st = socket_send(client->socket, msg, SERVER_MAX_PUT_LEN)) != OK)
+    st = socket_send(client->socket, msg, SERVER_MAX_PUT_LEN);
+    if (st != OK)
         return st;
 
-    if ((st = receive(client)) != OK)
+    st = receive(client);
+    if (st != OK)
         return st;
 
     return OK;
 }
 
-status_t validate_put_arguments(uint8_t value, uint8_t row, uint8_t col) {
+c
 
     if (row <= 0 || row >= 10 ||
         col <= 0 || col >= 10)
@@ -197,13 +203,19 @@ status_t receive(client_t *client) {
                              sizeof(buff_len))) == OK) {
 
         next_read_len = ntohl(buff_len);
-        if((next_buffer = (char *) malloc((next_read_len + 2) * sizeof(char))) == NULL)
+
+        next_buffer = (char *) malloc((next_read_len + 2) * sizeof(char));
+        if (next_buffer == NULL)
             return ERROR_OUT_OF_MEMORY;
 
         memset(next_buffer, 0, next_read_len + 2);
 
-        if ((st = socket_receive(client->socket, &next_res,
-                                 next_buffer, next_read_len, next_read_len)) != OK) {
+        st = socket_receive(client->socket,
+                           &next_res,
+                           next_buffer,
+                           next_read_len,
+                           next_read_len);
+        if (st != OK) {
             return st;
         }
         next_buffer[next_res + 1] = '\0';

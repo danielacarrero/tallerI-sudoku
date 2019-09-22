@@ -43,7 +43,6 @@ static status_t add_initial_cell(sudoku_t * sudoku,
 
 status_t sudoku_init(sudoku_t **sudoku, FILE * fi ) {
     char row_line[LEN_MAX_SUDOKU_LINE];
-    char *row_line_temp;
     char *iter;
     char *temp;
     bool eof = false;
@@ -69,13 +68,13 @@ status_t sudoku_init(sudoku_t **sudoku, FILE * fi ) {
         col = 1;
         if (fgets(row_line, LEN_MAX_SUDOKU_LINE, fi) == NULL)
             eof = true;
-        iter = strtok_r(row_line, DELIMITER_SUDOKU, &row_line_temp);
+        iter = strtok_r(row_line, DELIMITER_SUDOKU, &temp);
         while (iter != NULL && !eof) {
             value = (size_t) strtol(iter, &temp, 10);
             if (add_initial_cell(*sudoku, row, col, value) != OK){
                 return ERROR_CREATING_SUDOKU;
             }
-            iter = strtok_r(NULL, DELIMITER_SUDOKU, &row_line_temp);
+            iter = strtok_r(NULL, DELIMITER_SUDOKU, &temp);
             col ++;
         }
         row ++;
