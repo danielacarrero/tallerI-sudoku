@@ -1,3 +1,4 @@
+#define _POSIX_C_SOURCE 200112L
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
@@ -149,8 +150,7 @@ status_t process_get_command(server_t *server) {
         return st;
     }
 
-
-    if ((st = socket_send(server->socket, size, sizeof(max_table_send))) != OK)
+    if ((st = socket_send(server->socket, size, sizeof(uint32_t))) != OK)
         return st;
 
     if ((st = socket_send(server->socket, printable, strlen(printable))) != OK)
