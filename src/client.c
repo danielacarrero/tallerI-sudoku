@@ -178,8 +178,7 @@ status_t process_put(client_t *client, const char *buffer) {
     return OK;
 }
 
-c
-
+status_t validate_put_arguments(uint8_t value, uint8_t row, uint8_t col) {
     if (row <= 0 || row >= 10 ||
         col <= 0 || col >= 10)
         return ERROR_UNSUPPORTED_INDICES;
