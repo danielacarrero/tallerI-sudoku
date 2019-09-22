@@ -81,6 +81,8 @@ status_t destroy_server(server_t *server) {
     if ((st = ADT_socket_destroy(server->socket)) != OK)
         return st;
 
+    free(server->socket);
+    server->socket = NULL;
     free(server);
     server = NULL;
 
@@ -214,8 +216,6 @@ status_t process_verify_command(server_t *server) {
 
     char *msg = (ADT_sudoku_verify(server->sudoku) != OK) ? MSG_ERROR : MSG_OK;
 
-    /*char size[sizeof(strlen(msg))];
-    snprintf(size, sizeof(strlen(msg)),"%du", htons(strlen(msg)));*/
     msg_size = strlen(msg);
     max_will_send = htonl(msg_size);
 
