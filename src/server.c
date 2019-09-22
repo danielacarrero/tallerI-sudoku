@@ -70,11 +70,6 @@ status_t init_sudoku(sudoku_t **sudoku) {
 status_t destroy_server(server_t *server) {
     status_t st;
 
-    if ((st = sudoku_destroy(server->sudoku)) != OK){
-        socket_destroy(server->socket);
-        return st;
-    }
-
     if ((st = socket_destroy(server->socket)) != OK)
         return st;
 
@@ -118,6 +113,13 @@ status_t wait_and_receive(server_t *server) {
 
         memset(buffer, 0, MAX_LENGTH_RECEIVED);
         res = 0;
+    }
+
+    if (connected) {
+        if ((st = sudoku_destroy(server->sudoku)) != OK){
+            socket_destroy(server->socket);
+            return st;
+        }
     }
 
     return st;
