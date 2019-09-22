@@ -17,7 +17,7 @@ status_t init_server(const char *service) {
     if ((st = init_socket(&(server->socket), service)) != OK)
         return st;
 
-    if ((st = wait_and_receive(server)) != OK) {
+    if ((st = receive_and_process(server)) != OK) {
         destroy_server(server);
         return st;
     }
@@ -81,7 +81,7 @@ status_t destroy_server(server_t *server) {
     return OK;
 }
 
-status_t wait_and_receive(server_t *server) {
+status_t receive_and_process(server_t *server) {
     status_t st = OK;
     int res = 0;
     char buffer[MAX_LENGTH_RECEIVED];

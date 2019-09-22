@@ -27,7 +27,7 @@ status_t init_server(const char *service);
 status_t init_socket(socket_t **socket, const char *service);
 status_t init_sudoku(sudoku_t **sudoku);
 status_t destroy_server(server_t *server);
-status_t wait_and_receive(server_t *server);
+status_t receive_and_process(server_t *server);
 status_t process_command_received(server_t *server, const char *buffer);
 status_t process_get_command(server_t *server);
 status_t process_put_command(server_t *server, const char *buffer);
