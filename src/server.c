@@ -35,7 +35,7 @@ status_t init_socket(socket_t **socket, const char *service) {
     if (service == NULL)
         return ERROR_NULL_POINTER;
 
-    if((*socket = (socket_t*)malloc(sizeof(socket_t))) == NULL)
+    if ((*socket = (socket_t*)malloc(sizeof(socket_t))) == NULL)
         return ERROR_OUT_OF_MEMORY;
 
     (*socket)->host = NULL;
@@ -55,11 +55,11 @@ status_t init_sudoku(sudoku_t **sudoku) {
     if (sudoku == NULL)
         return ERROR_NULL_POINTER;
 
-    if ((fi = fopen(SUDOKU_FILE_PATH, "rt")) == NULL)
-        return ERROR_OPENING_FILE;
+    fi = fopen(SUDOKU_FILE_PATH, "rt");
 
-    if((st = sudoku_init(sudoku, fi)) != OK) {
-        fclose(fi);
+    if ((st = sudoku_init(sudoku, fi)) != OK) {
+        if (fi != NULL)
+            fclose(fi);
         return st;
     }
 
@@ -93,7 +93,8 @@ status_t receive_and_process(server_t *server) {
 
     memset(buffer, 0, MAX_LENGTH_RECEIVED);
 
-    while ((st = socket_receive(server->socket, &res, buffer, MAX_LENGTH_RECEIVED, MIN_LENGTH_RECEIVED)) != ERROR_CLOSED_SOCKET) {
+    while ((st = socket_receive(server->socket, &res, buffer,
+            MAX_LENGTH_RECEIVED, MIN_LENGTH_RECEIVED)) != ERROR_CLOSED_SOCKET) {
         if (res != MAX_LENGTH_RECEIVED) {
             buffer[res + 1] = '\0';
         }
@@ -106,7 +107,7 @@ status_t receive_and_process(server_t *server) {
             connected = true;
         }
 
-        if((st = process_command_received(server, buffer)) != OK){
+        if ((st = process_command_received(server, buffer)) != OK){
             print_error_msg(st);
             return st;
         }
@@ -126,7 +127,7 @@ status_t receive_and_process(server_t *server) {
 }
 
 status_t process_command_received(server_t *server, const char *buffer) {
-    switch(buffer[0]) {
+    switch (buffer[0]) {
         case CMD_GET:
             return process_get_command(server);
         case CMD_PUT:
@@ -148,18 +149,22 @@ status_t process_get_command(server_t *server) {
     uint32_t max_table_send = htonl(LEN_MAX_SUDOKU_TABLE);
     char *size = (char *) &max_table_send;
 
-    if((printable = (char *) malloc((LEN_MAX_SUDOKU_TABLE + 1) * sizeof(char))) == NULL)
+    printable = (char *) malloc((LEN_MAX_SUDOKU_TABLE + 1) * sizeof(char));
+    if (printable == NULL)
         return ERROR_OUT_OF_MEMORY;
     printable[0] = '\0';
 
-    if((st = sudoku_format_printable(server->sudoku, &printable, LEN_MAX_SUDOKU_TABLE)) != OK){
+    st = sudoku_fmt_printable(server->sudoku, &printable, LEN_MAX_SUDOKU_TABLE);
+    if (st != OK){
         return st;
     }
 
-    if ((st = socket_send(server->socket, size, sizeof(uint32_t))) != OK)
+    st = socket_send(server->socket, size, sizeof(uint32_t));
+    if (st != OK)
         return st;
 
-    if ((st = socket_send(server->socket, printable, strlen(printable))) != OK)
+    st = socket_send(server->socket, printable, strlen(printable);
+    if (st != OK)
         return st;
 
     free(printable);
@@ -170,7 +175,6 @@ status_t process_get_command(server_t *server) {
 status_t process_put_command(server_t *server, const char *buffer) {
     status_t st;
 
-    //printf("Processing PUT command\n");
     size_t row = (size_t) buffer[ROW_PARAM_POS];
     size_t col = (size_t) buffer[COL_PARAM_POS];
     size_t value = (size_t) buffer[VALUE_PARAM_POS];
@@ -178,7 +182,6 @@ status_t process_put_command(server_t *server, const char *buffer) {
     st = sudoku_put_value(server->sudoku, row, col, value);
 
     if (st == ERROR_UNMODIFIABLE_CELL) {
-
         char *msg = MSG_ERROR_UNMODIFIABLE_CELL;
         unsigned long msg_size = strlen(msg);
         int32_t max_will_send = htonl(msg_size);

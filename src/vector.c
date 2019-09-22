@@ -5,12 +5,14 @@
 
 
 status_t vector_create(vector_t  **p) {
-    if(p == NULL)
+    if (p == NULL)
         return ERROR_NULL_POINTER;
 
-    if((*p = (vector_t*) malloc(sizeof(vector_t))) == NULL)
+    if ((*p = (vector_t*) malloc(sizeof(vector_t))) == NULL)
         return ERROR_OUT_OF_MEMORY;
-    if(((*p) -> elements = (void **)malloc(VECTOR_INIT_CHOP * sizeof(void*))) == NULL){
+
+    (*p)->elements = (void **)malloc(VECTOR_INIT_CHOP * sizeof(void*));
+    if ((*p)->elements == NULL){
         free(*p);
         *p = NULL;
         return ERROR_OUT_OF_MEMORY;
@@ -28,11 +30,11 @@ status_t vector_destroy(void **p) {
     vector_t **pv = (vector_t **) p;
     status_t st;
 
-    if(pv == NULL)
+    if (pv == NULL)
         return ERROR_NULL_POINTER;
 
-    for(i=0; i < (*pv)->size; i++){
-        if((st = (*((*pv) -> destroyer)) ((*pv) -> elements + i)) != OK)
+    for (i=0; i < (*pv)->size; i++){
+        if ((st = (*((*pv) -> destroyer)) ((*pv) -> elements + i)) != OK)
             return st;
         (*pv) -> elements[i] = NULL;
     }
@@ -46,9 +48,10 @@ status_t vector_destroy(void **p) {
 status_t vector_append(vector_t *p, void *n) {
     void **aux;
 
-    if(p == NULL || n == NULL)
+    if (p == NULL || n == NULL)
         return ERROR_NULL_POINTER;
-    if((aux=(void**)realloc(p -> elements, (p -> size + 1) * sizeof(void *))) == NULL)
+    aux = (void **)realloc(p -> elements, (p -> size + 1) * sizeof(void *));
+    if (aux == NULL)
         return ERROR_OUT_OF_MEMORY;
 
     p -> elements = aux;
@@ -107,19 +110,19 @@ status_t vector_remove_element(vector_t *p1, void *v) {
         return ERROR_NOT_FOUND;
     }
 
-    if((st = vector_create(&aux)) != OK)
+    if ((st = vector_create(&aux)) != OK)
         return st;
 
     for (size_t i = 0; i < p1->size; i++) {
         if (p1->elements[i] != element) {
-            if((st = vector_append(aux, p1->elements[i])) != OK) {
+            if ((st = vector_append(aux, p1->elements[i])) != OK) {
                 vector_destroy((void **) &aux);
                 return st;
             }
         }
     }
 
-    if((st = vector_destroy((void **) &p1)) != OK) {
+    if ((st = vector_destroy((void **) &p1)) != OK) {
         vector_destroy((void **) &aux);
         return st;
     }
@@ -130,7 +133,7 @@ status_t vector_remove_element(vector_t *p1, void *v) {
 
 status_t vector_modify_element(vector_t *p1, void *v) {
     status_t st;
-    if(p1 == NULL || p1->searcher == NULL
+    if (p1 == NULL || p1->searcher == NULL
         || v == NULL || p1->destroyer == NULL)
         return ERROR_NULL_POINTER;
 
@@ -146,7 +149,7 @@ status_t vector_modify_element(vector_t *p1, void *v) {
 }
 
 status_t vector_set_destructor(vector_t *p, destroyer_t pf) {
-    if(p == NULL || pf == NULL)
+    if (p == NULL || pf == NULL)
         return ERROR_NULL_POINTER;
 
     p->destroyer = pf;
@@ -177,11 +180,11 @@ status_t vector_copy(const vector_t *src, vector_t **dest) {
         return st;
     }
 
-    if((aux = (void **)malloc(sizeof(void *))) == NULL)
+    if ((aux = (void **)malloc(sizeof(void *))) == NULL)
         return ERROR_OUT_OF_MEMORY;
 
     for (size_t i = 0; i < src->size; i++) {
-        if((st = (*(src->copier))(src->elements[i], aux)) != OK) {
+        if ((st = (*(src->copier))(src->elements[i], aux)) != OK) {
             return st;
         }
         vector_append(*dest, *aux);

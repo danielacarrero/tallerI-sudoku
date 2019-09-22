@@ -33,11 +33,11 @@ typedef struct {
     vector_t *current_cells;
 } sudoku_t;
 
-status_t sudoku_init(sudoku_t **sudoku, FILE * fi );
-status_t sudoku_put_value(sudoku_t *sudoku, size_t row, size_t col, size_t value);
+status_t sudoku_init(sudoku_t **sudoku, FILE * fi);
+status_t sudoku_put_value(sudoku_t *sudoku, size_t row, size_t col, size_t val);
 status_t sudoku_destroy(sudoku_t *sudoku);
 status_t sudoku_reset(sudoku_t *sudoku);
-status_t sudoku_format_printable(const sudoku_t *sudoku, char **printable, size_t size);
+status_t sudoku_fmt_printable(const sudoku_t *sudoku, char **out, size_t len);
 status_t sudoku_verify(const sudoku_t *sudoku);
 bool sudoku_compare_cell_position(const void *c1, const void *c2);
 status_t sudoku_copy_cell(const void *src, void **dst);

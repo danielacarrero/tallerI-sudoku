@@ -41,7 +41,7 @@ status_t sudoku_init(sudoku_t **sudoku, FILE * fi ) {
     size_t value;
     status_t st;
 
-    if (sudoku == NULL || fi == NULL)
+    if (sudoku == NULL)
         return ERROR_NULL_POINTER;
     if((*sudoku = (sudoku_t*)malloc(sizeof(sudoku_t))) == NULL)
         return ERROR_OUT_OF_MEMORY;
@@ -50,7 +50,7 @@ status_t sudoku_init(sudoku_t **sudoku, FILE * fi ) {
     if (vector_create(&((*sudoku)->current_cells)) != OK)
         return ERROR_CREATING_SUDOKU;
 
-    while(!eof){
+    while(fi != NULL && !eof){
         col = 1;
         if (fgets(row_line, LEN_MAX_SUDOKU_LINE, fi) == NULL) {
             eof = true;
@@ -138,57 +138,57 @@ status_t sudoku_reset(sudoku_t *sudoku) {
     return OK;
 }
 
-status_t sudoku_format_printable(const sudoku_t *sudoku, char **printable, size_t size) {
+status_t sudoku_fmt_printable(const sudoku_t *sudoku, char **out, size_t len) {
     size_t row = 1;
     size_t col = 1;
     cell_t search_cell;
     cell_t *result_cell;
     char cell_number[LEN_MAX_NUMBER];
 
-    if (sudoku == NULL || printable == NULL)
+    if (sudoku == NULL || out == NULL)
         return ERROR_NULL_POINTER;
 
     if (vector_set_searcher(sudoku->current_cells, sudoku_compare_cell_position) != OK)
         return ERROR_FORMATTING_SUDOKU;
 
-    strncat(*printable, SUDOKU_BIG_CELL_LIMIT_ROW, size);
-    size -= strlen(SUDOKU_BIG_CELL_LIMIT_ROW);
+    strncat(*out, SUDOKU_BIG_CELL_LIMIT_ROW, len);
+    len -= strlen(SUDOKU_BIG_CELL_LIMIT_ROW);
     for (size_t t_row = 1; t_row <= SUDOKU_MAX_NUM_TABLE_ROWS; t_row ++) {
         if(t_row % 6 == 0) {
-            strncat(*printable, SUDOKU_BIG_CELL_LIMIT_ROW, size);
-            size -= strlen(SUDOKU_BIG_CELL_LIMIT_ROW);
+            strncat(*out, SUDOKU_BIG_CELL_LIMIT_ROW, len);
+            len -= strlen(SUDOKU_BIG_CELL_LIMIT_ROW);
         } else if(t_row % 2){
-            strncat(*printable, SUDOKU_INIT_TABLE_ROW, size);
-            size -= strlen(SUDOKU_INIT_TABLE_ROW);
+            strncat(*out, SUDOKU_INIT_TABLE_ROW, len);
+            len -= strlen(SUDOKU_INIT_TABLE_ROW);
             for(col = 1; col <= MAX_NUM_COLS; col ++) {
                 search_cell.row = row;
                 search_cell.col = col;
 
                 result_cell = (cell_t *) vector_search(sudoku->current_cells, &search_cell);
                 if (result_cell == NULL){
-                    strncat(*printable, SUDOKU_EMPTY_CELL, size);
-                    size -= strlen(SUDOKU_EMPTY_CELL);
+                    strncat(*out, SUDOKU_EMPTY_CELL, len);
+                    len -= strlen(SUDOKU_EMPTY_CELL);
                 } else {
                     snprintf(cell_number, LEN_MAX_NUMBER,"%zu", (size_t) result_cell->value);
-                    strncat(*printable, cell_number, size);
-                    size -= strlen(cell_number);
+                    strncat(*out, cell_number, len);
+                    len -= strlen(cell_number);
                 }
 
                 if (col == MAX_NUM_COLS) {
-                    strncat(*printable, SUDOKU_FINISH_TABLE_ROW, size);
-                    size -= strlen(SUDOKU_FINISH_TABLE_ROW);
+                    strncat(*out, SUDOKU_FINISH_TABLE_ROW, len);
+                    len -= strlen(SUDOKU_FINISH_TABLE_ROW);
                 } else if (col % 3 == 0){
-                    strncat(*printable, SUDOKU_BIG_CELL_LIMIT_COL, size);
-                    size -= strlen(SUDOKU_BIG_CELL_LIMIT_COL);
+                    strncat(*out, SUDOKU_BIG_CELL_LIMIT_COL, len);
+                    len -= strlen(SUDOKU_BIG_CELL_LIMIT_COL);
                 } else {
-                    strncat(*printable, SUDOKU_LIMIT_COL, size);
-                    size -= strlen(SUDOKU_LIMIT_COL);
+                    strncat(*out, SUDOKU_LIMIT_COL, len);
+                    len -= strlen(SUDOKU_LIMIT_COL);
                 }
             }
             row ++;
         } else {
-            strncat(*printable, SUDOKU_LIMIT_ROW, size);
-            size -= strlen(SUDOKU_LIMIT_ROW);
+            strncat(*out, SUDOKU_LIMIT_ROW, len);
+            len -= strlen(SUDOKU_LIMIT_ROW);
         }
 
     }

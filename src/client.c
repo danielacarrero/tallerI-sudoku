@@ -208,7 +208,7 @@ status_t receive(client_t *client) {
         }
         next_buffer[next_res + 1] = '\0';
 
-        printf("%s\n", next_buffer);
+        printf("%s", next_buffer);
         free(next_buffer);
         next_buffer = NULL;
     }

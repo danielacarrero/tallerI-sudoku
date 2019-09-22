@@ -9,7 +9,7 @@
 #define MAX_LENGTH_RECEIVED 5
 #define MIN_LENGTH_RECEIVED 2
 
-#define SUDOKU_FILE_PATH "../src/board.txt"
+#define SUDOKU_FILE_PATH "board.txt"
 #define CMD_GET 'G'
 #define CMD_PUT 'P'
 #define CMD_VERIFY 'V'
