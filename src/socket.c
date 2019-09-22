@@ -65,12 +65,16 @@ status_t socket_connect(socket_t *sckt, struct addrinfo *addrinfo_res) {
     if (sckt == NULL)
         return ERROR_NULL_POINTER;
 
-    for (iterator = addrinfo_res; iterator != NULL && connected == false; iterator = iterator->ai_next) {
+    for (iterator = addrinfo_res;
+    iterator != NULL && connected == false;
+    iterator = iterator->ai_next) {
         if (socket_create(sckt, addrinfo_res) != OK) {
             continue;
         }
 
-        res = connect(sckt->file_descriptor, iterator->ai_addr, iterator->ai_addrlen);
+        res = connect(sckt->file_descriptor,
+                iterator->ai_addr,
+                iterator->ai_addrlen);
         if (res == INVALID_FD) {
             printf("Error: %s\n", strerror(errno));
             close(sckt->file_descriptor);
@@ -96,7 +100,9 @@ status_t socket_bind_and_listen(socket_t *sckt, struct addrinfo *addrinfo_res) {
     if (socket_create(sckt, addrinfo_res) != OK)
         return ERROR_SOCKET_BINDING_AND_LISTEN;
 
-    res = bind(sckt->file_descriptor, addrinfo_res->ai_addr, addrinfo_res->ai_addrlen);
+    res = bind(sckt->file_descriptor,
+            addrinfo_res->ai_addr,
+            addrinfo_res->ai_addrlen);
     freeaddrinfo(addrinfo_res);
 
     if (res == ERROR_SOCKET) {
@@ -123,7 +129,7 @@ status_t socket_send(socket_t *sckt, const char *buffer, size_t length) {
         return ERROR_NULL_POINTER;
 
     while (sent < length) {
-        res = send(sckt->file_descriptor, &buffer[sent], length - sent, 0); //TODO: MSG_NOSIGNAL (no está en macOS)
+        res = send(sckt->file_descriptor, &buffer[sent], length - sent, 0);
         if (res == CLOSED_SOCKET) {
             return ERROR_CLOSED_SOCKET;
         } else if (res == ERROR_SOCKET) {
@@ -131,14 +137,17 @@ status_t socket_send(socket_t *sckt, const char *buffer, size_t length) {
             return ERROR_SOCKET_SENDING;
         } else {
             sent += res;
-            //fprintf(stdout, "Enviando %i/%zu bytes\n", res, length);
         }
     }
 
     return OK;
 }
 
-status_t socket_receive(socket_t *sckt, int *received, char *buffer, size_t length, size_t min_length) {
+status_t socket_receive(socket_t *sckt,
+                        int *received,
+                        char *buffer,
+                        size_t length,
+                        size_t min_length) {
     int res = 0;
     long buff_len = 0;
     char *temp;
@@ -150,7 +159,10 @@ status_t socket_receive(socket_t *sckt, int *received, char *buffer, size_t leng
     memset(buffer, 0, length);
 
     while (*received < length) {
-        res = recv(sckt->file_descriptor, &buffer[*received], length - *received, 0);
+        res = recv(sckt->file_descriptor,
+                &buffer[*received],
+                length - *received,
+                0);
 
         if (res == CLOSED_SOCKET) {
             shutdown(sckt->file_descriptor, SHUT_RDWR);
@@ -164,14 +176,11 @@ status_t socket_receive(socket_t *sckt, int *received, char *buffer, size_t leng
             st = ERROR_SOCKET_RECEIVING;
             break;
         } else {
-            //fprintf(stdout, "Recibiendo %i/%zu bytes\n", res, length);
             *received += res;
 
             buff_len = strtol(buffer, &temp, 10);
-            if (buff_len == 0 && *received >= min_length) {
-                //printf("Recibiendo 0 bytes.\n");
+            if (buff_len == 0 && *received >= min_length)
                 break;
-            }
         }
     }
 
