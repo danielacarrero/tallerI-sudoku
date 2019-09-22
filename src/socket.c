@@ -9,14 +9,12 @@
 #include <errno.h>
 #include <stdlib.h>
 
-#include "adt_socket.h"
+#include "socket.h"
 
-status_t ADT_socket_init(socket_t *adt_socket, socket_type_t type) {
+ struct addrinfo * socket_init(socket_t *sckt, socket_type_t type) {
     struct addrinfo hints;
+    struct addrinfo *addrinfo_res;
     int res;
-
-    if (adt_socket == NULL)
-        return ERROR_NULL_POINTER;
 
     memset(&hints, 0, sizeof(struct addrinfo));
     hints.ai_family = AF_INET;
@@ -26,97 +24,106 @@ status_t ADT_socket_init(socket_t *adt_socket, socket_type_t type) {
     hints.ai_addr = NULL;
     hints.ai_next = NULL;
 
-    if ((res = getaddrinfo(adt_socket->host, adt_socket->service,
-            &hints, &(adt_socket->addrinfo_res))) != GETADDRINFO_SUCCESSFUL) {
+    if ((res = getaddrinfo(sckt->host, sckt->service,
+                           &hints, &addrinfo_res)) != GETADDRINFO_SUCCESSFUL) {
         perror(gai_strerror(res));
-        return ERROR_INVALID_DATA;
     }
 
+    return addrinfo_res;
+}
+
+status_t socket_create(socket_t *sckt, struct addrinfo *addrinfo_res) {
+    int fd = 0;
+
+    fd = socket(addrinfo_res->ai_family,
+              addrinfo_res->ai_socktype,
+              addrinfo_res->ai_protocol);
+
+    if (fd == INVALID_FD)
+        return ERROR_INVALID_DATA;
+
+    sckt->file_descriptor = fd;
+
     return OK;
 }
 
-status_t ADT_socket_destroy(socket_t *adt_socket) {
-    if (adt_socket == NULL)
+status_t socket_destroy(socket_t *sckt) {
+    if (sckt == NULL)
         return ERROR_NULL_POINTER;
 
-    shutdown(adt_socket->file_descriptor, SHUT_RDWR);
-    close(adt_socket->file_descriptor);
+    shutdown(sckt->file_descriptor, SHUT_RDWR);
+    close(sckt->file_descriptor);
 
     return OK;
 }
 
-status_t ADT_socket_connect(socket_t *adt_socket) {
+status_t socket_connect(socket_t *sckt, struct addrinfo *addrinfo_res) {
     int res;
-    int fd;
     bool connected = false;
     struct addrinfo *iterator;
 
-    if (adt_socket == NULL)
+    if (sckt == NULL)
         return ERROR_NULL_POINTER;
 
-    for (iterator = adt_socket->addrinfo_res; iterator != NULL && connected == false; iterator = iterator->ai_next) {
-        fd = socket(iterator->ai_family, iterator->ai_socktype, iterator->ai_protocol);
-        if (fd == INVALID_FD)
+    for (iterator = addrinfo_res; iterator != NULL && connected == false; iterator = iterator->ai_next) {
+        if (socket_create(sckt, addrinfo_res) != OK) {
             continue;
+        }
 
-        res = connect(fd, iterator->ai_addr, iterator->ai_addrlen);
+        res = connect(sckt->file_descriptor, iterator->ai_addr, iterator->ai_addrlen);
         if (res == INVALID_FD) {
             printf("Error: %s\n", strerror(errno));
-            close(fd);
+            close(sckt->file_descriptor);
+            sckt->file_descriptor = 0;
         } else {
-            adt_socket->file_descriptor = fd;
             connected = true;
         }
     }
 
-    freeaddrinfo(adt_socket->addrinfo_res);
+    freeaddrinfo(addrinfo_res);
     if (!connected)
         return ERROR_SOCKET_CONNECTION;
 
     return OK;
 }
 
-status_t ADT_socket_bind_and_listen(socket_t *adt_socket) {
+status_t socket_bind_and_listen(socket_t *sckt, struct addrinfo *addrinfo_res) {
     int res;
-    int fd;
 
-    if(adt_socket == NULL)
+    if (sckt == NULL)
         return ERROR_NULL_POINTER;
 
-    fd = socket(adt_socket->addrinfo_res->ai_family, adt_socket->addrinfo_res->ai_socktype, adt_socket->addrinfo_res->ai_protocol);
-    if (fd == INVALID_FD)
+    if (socket_create(sckt, addrinfo_res) != OK)
         return ERROR_SOCKET_BINDING_AND_LISTEN;
 
-    adt_socket->file_descriptor = fd;
-
-    res = bind(adt_socket->file_descriptor, adt_socket->addrinfo_res->ai_addr, adt_socket->addrinfo_res->ai_addrlen);
-    freeaddrinfo(adt_socket->addrinfo_res);
+    res = bind(sckt->file_descriptor, addrinfo_res->ai_addr, addrinfo_res->ai_addrlen);
+    freeaddrinfo(addrinfo_res);
 
     if (res == ERROR_SOCKET) {
         printf("Error: %s\n", strerror(errno));
-        close(adt_socket->file_descriptor);
+        close(sckt->file_descriptor);
         return ERROR_SOCKET_BINDING_AND_LISTEN;
     }
     
-    res = listen(adt_socket->file_descriptor, MAX_CONNECTIONS);
+    res = listen(sckt->file_descriptor, MAX_CONNECTIONS);
     if (res == ERROR_SOCKET) {
         printf("Error: %s\n", strerror(errno));
-        close(adt_socket->file_descriptor);
+        close(sckt->file_descriptor);
         return ERROR_SOCKET_BINDING_AND_LISTEN;
     }
 
     return OK;
 }
 
-status_t ADT_socket_send(socket_t *adt_socket, const char *buffer, size_t length) {
+status_t socket_send(socket_t *sckt, const char *buffer, size_t length) {
     int sent = 0;
     int res = 0;
 
-    if(adt_socket == NULL || buffer == NULL)
+    if (sckt == NULL || buffer == NULL)
         return ERROR_NULL_POINTER;
 
-    while(sent < length) {
-        res = send(adt_socket->file_descriptor, &buffer[sent], length - sent, 0); //TODO: MSG_NOSIGNAL (no está en macOS)
+    while (sent < length) {
+        res = send(sckt->file_descriptor, &buffer[sent], length - sent, 0); //TODO: MSG_NOSIGNAL (no está en macOS)
         if (res == CLOSED_SOCKET) {
             return ERROR_CLOSED_SOCKET;
         } else if (res == ERROR_SOCKET) {
@@ -131,18 +138,18 @@ status_t ADT_socket_send(socket_t *adt_socket, const char *buffer, size_t length
     return OK;
 }
 
-status_t ADT_socket_receive(socket_t *adt_socket, int peer_fd, int *received, char *buffer, size_t length, size_t min_length) {
+status_t socket_receive(socket_t *sckt, int peer_fd, int *received, char *buffer, size_t length, size_t min_length) {
     int res = 0;
     long buff_len = 0;
     char *temp;
     status_t st = OK;
 
-    if (adt_socket == NULL || buffer == NULL)
+    if (sckt == NULL || buffer == NULL)
         return ERROR_NULL_POINTER;
 
     memset(buffer, 0, length);
 
-    while(*received < length) {
+    while (*received < length) {
         res = recv(peer_fd, &buffer[*received], length - *received, 0);
 
         if (res == CLOSED_SOCKET) {
@@ -171,17 +178,17 @@ status_t ADT_socket_receive(socket_t *adt_socket, int peer_fd, int *received, ch
     return st;
 }
 
-status_t ADT_socket_accept(socket_t *adt_socket, int *peer_fd) {
+status_t socket_accept(socket_t *sckt, int *peer_fd) {
 
-    if(adt_socket == NULL || peer_fd == NULL)
+    if (sckt == NULL || peer_fd == NULL)
         return ERROR_NULL_POINTER;
 
-    *peer_fd = accept(adt_socket->file_descriptor, NULL, NULL);
-    adt_socket->file_descriptor = *peer_fd;
+    *peer_fd = accept(sckt->file_descriptor, NULL, NULL);
+    sckt->file_descriptor = *peer_fd;
 
     if (*peer_fd == INVALID_FD) {
         printf("Error: %s\n", strerror(errno));
-        ADT_socket_destroy(adt_socket);
+        socket_destroy(sckt);
         return ERROR_ACCEPTING_SOCKET_CONNECTION;
     }
 

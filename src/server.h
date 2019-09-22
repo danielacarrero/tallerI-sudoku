@@ -2,9 +2,9 @@
 #define SERVER__H
 
 #include "types.h"
-#include "adt_socket.h"
+#include "socket.h"
 #include "errors.h"
-#include "adt_sudoku.h"
+#include "sudoku.h"
 
 #define MAX_LENGTH_RECEIVED 5
 #define MIN_LENGTH_RECEIVED 2

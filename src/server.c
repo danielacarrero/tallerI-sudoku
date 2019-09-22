@@ -17,7 +17,7 @@ status_t init_server(const char *service) {
         return st;
 
     if ((st = init_sudoku(&(server->sudoku))) != OK){
-        ADT_socket_destroy((server->socket));
+        socket_destroy((server->socket));
         return st;
     }
 
@@ -34,6 +34,7 @@ status_t init_server(const char *service) {
 
 status_t init_socket(socket_t **socket, const char *service) {
     status_t st;
+    struct addrinfo *addrinfo_res;
 
     if (service == NULL)
         return ERROR_NULL_POINTER;
@@ -44,9 +45,9 @@ status_t init_socket(socket_t **socket, const char *service) {
     (*socket)->host = NULL;
     (*socket)->service = service;
 
-    if ((st = ADT_socket_init(*socket, SERVER)) != OK)
-        return st;
-    if ((st = ADT_socket_bind_and_listen(*socket)) != OK)
+    addrinfo_res = socket_init(*socket, SERVER);
+
+    if ((st = socket_bind_and_listen(*socket, addrinfo_res)) != OK)
         return st;
     return OK;
 }
@@ -61,7 +62,7 @@ status_t init_sudoku(sudoku_t **sudoku) {
     if ((fi = fopen(SUDOKU_FILE_PATH, "rt")) == NULL)
         return ERROR_OPENING_FILE;
 
-    if((st = ADT_sudoku_init(sudoku, fi)) != OK) {
+    if((st = sudoku_init(sudoku, fi)) != OK) {
         fclose(fi);
         return st;
     }
@@ -73,12 +74,12 @@ status_t init_sudoku(sudoku_t **sudoku) {
 status_t destroy_server(server_t *server) {
     status_t st;
 
-    if ((st = ADT_sudoku_destroy(server->sudoku)) != OK){
-        ADT_socket_destroy(server->socket);
+    if ((st = sudoku_destroy(server->sudoku)) != OK){
+        socket_destroy(server->socket);
         return st;
     }
 
-    if ((st = ADT_socket_destroy(server->socket)) != OK)
+    if ((st = socket_destroy(server->socket)) != OK)
         return st;
 
     free(server->socket);
@@ -95,13 +96,13 @@ status_t wait_and_receive(server_t *server) {
     int res = 0;
     char buffer[MAX_LENGTH_RECEIVED];
 
-    if ((st = ADT_socket_accept(server->socket, &peer_fd)) != OK) {
+    if ((st = socket_accept(server->socket, &peer_fd)) != OK) {
         return st;
     }
 
     memset(buffer, 0, MAX_LENGTH_RECEIVED);
 
-    while ((st = ADT_socket_receive(server->socket, peer_fd, &res, buffer, MAX_LENGTH_RECEIVED, MIN_LENGTH_RECEIVED)) != ERROR_CLOSED_SOCKET) {
+    while ((st = socket_receive(server->socket, peer_fd, &res, buffer, MAX_LENGTH_RECEIVED, MIN_LENGTH_RECEIVED)) != ERROR_CLOSED_SOCKET) {
         if (res != MAX_LENGTH_RECEIVED) {
             buffer[res + 1] = '\0';
         }
@@ -145,15 +146,15 @@ status_t process_get_command(server_t *server) {
         return ERROR_OUT_OF_MEMORY;
     printable[0] = '\0';
 
-    if((st = ADT_sudoku_format_printable(server->sudoku, &printable, LEN_MAX_SUDOKU_TABLE)) != OK){
+    if((st = sudoku_format_printable(server->sudoku, &printable, LEN_MAX_SUDOKU_TABLE)) != OK){
         return st;
     }
 
 
-    if ((st = ADT_socket_send(server->socket,  size, sizeof(max_table_send))) != OK)
+    if ((st = socket_send(server->socket, size, sizeof(max_table_send))) != OK)
         return st;
 
-    if ((st = ADT_socket_send(server->socket, printable, strlen(printable))) != OK)
+    if ((st = socket_send(server->socket, printable, strlen(printable))) != OK)
         return st;
 
     free(printable);
@@ -169,7 +170,7 @@ status_t process_put_command(server_t *server, const char *buffer) {
     size_t col = (size_t) buffer[COL_PARAM_POS];
     size_t value = (size_t) buffer[VALUE_PARAM_POS];
 
-    st = ADT_sudoku_put_value(server->sudoku, row, col, value);
+    st = sudoku_put_value(server->sudoku, row, col, value);
 
     if (st == ERROR_UNMODIFIABLE_CELL) {
 
@@ -178,10 +179,10 @@ status_t process_put_command(server_t *server, const char *buffer) {
         int32_t max_will_send = htonl(msg_size);
         char *size = (char *) &max_will_send;
 
-        if ((st = ADT_socket_send(server->socket, size, sizeof(max_will_send))) != OK)
+        if ((st = socket_send(server->socket, size, sizeof(max_will_send))) != OK)
             return st;
 
-        if ((st = ADT_socket_send(server->socket, msg, strlen(msg))) != OK)
+        if ((st = socket_send(server->socket, msg, strlen(msg))) != OK)
             return st;
 
         return OK;
@@ -199,7 +200,7 @@ status_t process_reset_command(server_t *server) {
 
     //printf("Processing RESET command\n");
 
-    if(((st = ADT_sudoku_reset(server->sudoku)) != OK))
+    if(((st = sudoku_reset(server->sudoku)) != OK))
         return st;
     if((st = process_get_command(server)) != OK)
         return st;
@@ -214,15 +215,15 @@ status_t process_verify_command(server_t *server) {
     int32_t max_will_send;
     char *size = (char *) &max_will_send;
 
-    char *msg = (ADT_sudoku_verify(server->sudoku) != OK) ? MSG_ERROR : MSG_OK;
+    char *msg = (sudoku_verify(server->sudoku) != OK) ? MSG_ERROR : MSG_OK;
 
     msg_size = strlen(msg);
     max_will_send = htonl(msg_size);
 
-    if ((st = ADT_socket_send(server->socket,  size, sizeof(max_will_send))) != OK)
+    if ((st = socket_send(server->socket, size, sizeof(max_will_send))) != OK)
         return st;
 
-    if ((st = ADT_socket_send(server->socket, msg, strlen(msg))) != OK)
+    if ((st = socket_send(server->socket, msg, strlen(msg))) != OK)
         return st;
 
     return OK;
