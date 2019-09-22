@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
         char *service = argv[CMD_ARG_SERVER_PORT_POSITION];
         if((st = init_server(service)) != OK) {
             print_error_msg(st);
-            return ERROR;
+            return (st == ERROR_CLOSED_SOCKET) ? SUCCESSFUL : ERROR;
         }
     }
 
