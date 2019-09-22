@@ -25,14 +25,19 @@
 #define CMD_ROW_POSITION 9
 #define CMD_COL_POSITION 11
 
+typedef struct {
+    socket_t *socket;
+} client_t;
+
 status_t init_client(const char *host, const char *service);
-void process_input(socket_t *socket);
-status_t process_command(socket_t *socket, char *buf);
-status_t receive(socket_t *socket);
-status_t process_get(socket_t *socket);
-status_t process_verify(socket_t *socket);
-status_t process_reset(socket_t *socket);
-status_t process_put(socket_t *socket, const char *buffer);
+status_t destroy_client(client_t *client);
+void process_input(client_t *client);
+status_t process_command(client_t *client, char *buf);
+status_t receive(client_t *client);
+status_t process_get(client_t *client);
+status_t process_verify(client_t *client);
+status_t process_reset(client_t *client);
+status_t process_put(client_t *client, const char *buffer);
 status_t validate_put_arguments(uint8_t value, uint8_t row, uint8_t col);
 
 #endif
