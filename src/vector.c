@@ -139,7 +139,7 @@ status_t vector_modify_element(vector_t *p1, void *v) {
 
     for (size_t i = 0; i < p1->size; i++) {
         if ((*(p1->searcher))(p1->elements[i], v) == true) {
-            if((st = (*(p1->destroyer)) (p1->elements + i)) != OK)
+            if ((st = (*(p1->destroyer)) (p1->elements + i)) != OK)
                 return st;
             p1->elements[i] = v;
         }

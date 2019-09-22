@@ -20,14 +20,8 @@ char* errors [MAX_ERRORS] = {
 };
 
 status_t print_error_msg(status_t code) {
-    if(code >= MAX_ERRORS)
+    if (code >= MAX_ERRORS)
         return ERROR_INVALID_DATA;
     fprintf(stderr, "%s", errors[code]);
     return OK;
-}
-
-char* get_error_msg(status_t code) {
-    if(code >= MAX_ERRORS)
-        return NULL;
-    return errors[code];
 }

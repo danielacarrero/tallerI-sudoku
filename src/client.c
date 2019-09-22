@@ -165,7 +165,7 @@ status_t process_put(client_t *client, const char *buffer) {
     msg[0] = SERVER_CMD_PUT[0];
     msg[1] = ((char *) &row)[0];
     msg[2] = ((char *) &col)[0];
-    msg[3] = ((char * ) &value)[0];
+    msg[3] = ((char *) &value)[0];
 
     st = socket_send(client->socket, msg, SERVER_MAX_PUT_LEN);
     if (st != OK)
@@ -201,7 +201,6 @@ status_t receive(client_t *client) {
     if ((st = socket_receive(client->socket, &res,
                              (char *) &buff_len, sizeof(buff_len),
                              sizeof(buff_len))) == OK) {
-
         next_read_len = ntohl(buff_len);
 
         next_buffer = (char *) malloc((next_read_len + 2) * sizeof(char));
