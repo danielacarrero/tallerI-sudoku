@@ -174,7 +174,7 @@ status_t process_get_command(server_t *server) {
     if (st != OK)
         return st;
 
-    st = socket_send(server->socket, printable, strlen(printable);
+    st = socket_send(server->socket, printable, strlen(printable));
     if (st != OK)
         return st;
 
