@@ -23,8 +23,12 @@ int main(int argc, char *argv[]) {
     if (is_server(argv)) {
         char *service = argv[CMD_ARG_SERVER_PORT_POSITION];
         if((st = init_server(service)) != OK) {
-            print_error_msg(st);
-            return (st == ERROR_CLOSED_SOCKET) ? SUCCESSFUL : ERROR;
+            if (st == ERROR_CLOSED_SOCKET) {
+                return SUCCESSFUL;
+            } else {
+                print_error_msg(st);
+                return ERROR;
+            }
         }
     }
 

@@ -17,11 +17,6 @@ status_t init_server(const char *service) {
     if ((st = init_socket(&(server->socket), service)) != OK)
         return st;
 
-    if ((st = init_sudoku(&(server->sudoku))) != OK){
-        socket_destroy((server->socket));
-        return st;
-    }
-
     if ((st = wait_and_receive(server)) != OK) {
         destroy_server(server);
         return st;
@@ -95,6 +90,7 @@ status_t wait_and_receive(server_t *server) {
     status_t st = OK;
     int res = 0;
     char buffer[MAX_LENGTH_RECEIVED];
+    bool connected = false;
 
     if ((st = socket_accept(server->socket)) != OK) {
         return st;
@@ -105,6 +101,14 @@ status_t wait_and_receive(server_t *server) {
     while ((st = socket_receive(server->socket, &res, buffer, MAX_LENGTH_RECEIVED, MIN_LENGTH_RECEIVED)) != ERROR_CLOSED_SOCKET) {
         if (res != MAX_LENGTH_RECEIVED) {
             buffer[res + 1] = '\0';
+        }
+
+        if (!connected) {
+            if ((st = init_sudoku(&(server->sudoku))) != OK){
+                socket_destroy((server->socket));
+                return st;
+            }
+            connected = true;
         }
 
         if((st = process_command_received(server, buffer)) != OK){
