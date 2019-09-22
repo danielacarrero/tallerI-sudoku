@@ -96,8 +96,11 @@ status_t ADT_sudoku_put_value(sudoku_t *sudoku, size_t row, size_t col, size_t v
     if ((st = ADT_vector_set_searcher(sudoku->current_cells, ADT_sudoku_compare_cell_position)) != OK)
         return st;
 
-    if (ADT_vector_search(sudoku->initial_cells, new_cell) != NULL)
+    if (ADT_vector_search(sudoku->initial_cells, new_cell) != NULL){
+        free(new_cell);
+        new_cell = NULL;
         return ERROR_UNMODIFIABLE_CELL;
+    }
 
     if (ADT_vector_search(sudoku->current_cells, new_cell) != NULL) {
         if((st = ADT_vector_modify_element(sudoku->current_cells, new_cell)) != OK)
