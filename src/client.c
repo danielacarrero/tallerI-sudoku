@@ -191,8 +191,7 @@ status_t receive(client_t *client) {
     long next_read_len;
     int32_t buff_len;
 
-    if ((st = socket_receive(client->socket,
-                             client->socket->file_descriptor, &res,
+    if ((st = socket_receive(client->socket, &res,
                              (char *) &buff_len, sizeof(buff_len),
                              sizeof(buff_len))) == OK) {
 
@@ -202,8 +201,7 @@ status_t receive(client_t *client) {
 
         memset(next_buffer, 0, next_read_len + 2);
 
-        if ((st = socket_receive(client->socket,
-                                 client->socket->file_descriptor, &next_res,
+        if ((st = socket_receive(client->socket, &next_res,
                                  next_buffer, next_read_len, next_read_len)) != OK) {
             return st;
         }

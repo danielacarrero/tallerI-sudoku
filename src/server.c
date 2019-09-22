@@ -92,17 +92,16 @@ status_t destroy_server(server_t *server) {
 
 status_t wait_and_receive(server_t *server) {
     status_t st = OK;
-    int peer_fd = 0;
     int res = 0;
     char buffer[MAX_LENGTH_RECEIVED];
 
-    if ((st = socket_accept(server->socket, &peer_fd)) != OK) {
+    if ((st = socket_accept(server->socket)) != OK) {
         return st;
     }
 
     memset(buffer, 0, MAX_LENGTH_RECEIVED);
 
-    while ((st = socket_receive(server->socket, peer_fd, &res, buffer, MAX_LENGTH_RECEIVED, MIN_LENGTH_RECEIVED)) != ERROR_CLOSED_SOCKET) {
+    while ((st = socket_receive(server->socket, &res, buffer, MAX_LENGTH_RECEIVED, MIN_LENGTH_RECEIVED)) != ERROR_CLOSED_SOCKET) {
         if (res != MAX_LENGTH_RECEIVED) {
             buffer[res + 1] = '\0';
         }

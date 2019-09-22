@@ -138,7 +138,7 @@ status_t socket_send(socket_t *sckt, const char *buffer, size_t length) {
     return OK;
 }
 
-status_t socket_receive(socket_t *sckt, int peer_fd, int *received, char *buffer, size_t length, size_t min_length) {
+status_t socket_receive(socket_t *sckt, int *received, char *buffer, size_t length, size_t min_length) {
     int res = 0;
     long buff_len = 0;
     char *temp;
@@ -150,17 +150,17 @@ status_t socket_receive(socket_t *sckt, int peer_fd, int *received, char *buffer
     memset(buffer, 0, length);
 
     while (*received < length) {
-        res = recv(peer_fd, &buffer[*received], length - *received, 0);
+        res = recv(sckt->file_descriptor, &buffer[*received], length - *received, 0);
 
         if (res == CLOSED_SOCKET) {
-            shutdown(peer_fd, SHUT_RDWR);
-            close(peer_fd);
+            shutdown(sckt->file_descriptor, SHUT_RDWR);
+            close(sckt->file_descriptor);
             st = ERROR_CLOSED_SOCKET;
             break;
         } else if (res == ERROR_SOCKET) {
             printf("Error: %s\n", strerror(errno));
-            shutdown(peer_fd, SHUT_RDWR);
-            close(peer_fd);
+            shutdown(sckt->file_descriptor, SHUT_RDWR);
+            close(sckt->file_descriptor);
             st = ERROR_SOCKET_RECEIVING;
             break;
         } else {
@@ -178,15 +178,16 @@ status_t socket_receive(socket_t *sckt, int peer_fd, int *received, char *buffer
     return st;
 }
 
-status_t socket_accept(socket_t *sckt, int *peer_fd) {
+status_t socket_accept(socket_t *sckt) {
+    int peer_fd = 0;
 
-    if (sckt == NULL || peer_fd == NULL)
+    if (sckt == NULL)
         return ERROR_NULL_POINTER;
 
-    *peer_fd = accept(sckt->file_descriptor, NULL, NULL);
-    sckt->file_descriptor = *peer_fd;
+    peer_fd = accept(sckt->file_descriptor, NULL, NULL);
+    sckt->file_descriptor = peer_fd;
 
-    if (*peer_fd == INVALID_FD) {
+    if (peer_fd == INVALID_FD) {
         printf("Error: %s\n", strerror(errno));
         socket_destroy(sckt);
         return ERROR_ACCEPTING_SOCKET_CONNECTION;
