@@ -11,18 +11,22 @@ status_t init_server(const char *service) {
     status_t st;
     server_t *server;
 
-    if ((server = (server_t*)malloc(sizeof(server_t))) == NULL)
+    server = (server_t*)malloc(sizeof(server_t));
+    if (server == NULL)
         return ERROR_OUT_OF_MEMORY;
 
-    if ((st = init_socket(&(server->socket), service)) != OK)
+    st = init_socket(&(server->socket), service);
+    if (st != OK)
         return st;
 
-    if ((st = receive_and_process(server)) != OK) {
+    st = receive_and_process(server);
+    if (st != OK) {
         destroy_server(server);
         return st;
     }
 
-    if ((st = destroy_server(server)) != OK)
+    st = destroy_server(server);
+    if (st != OK)
         return st;
 
     return OK;
@@ -35,7 +39,8 @@ status_t init_socket(socket_t **socket, const char *service) {
     if (service == NULL)
         return ERROR_NULL_POINTER;
 
-    if ((*socket = (socket_t*)malloc(sizeof(socket_t))) == NULL)
+    *socket = (socket_t*)malloc(sizeof(socket_t));
+    if (*socket == NULL)
         return ERROR_OUT_OF_MEMORY;
 
     (*socket)->host = NULL;
@@ -43,8 +48,10 @@ status_t init_socket(socket_t **socket, const char *service) {
 
     addrinfo_res = socket_init(*socket, SERVER);
 
-    if ((st = socket_bind_and_listen(*socket, addrinfo_res)) != OK)
+    st = socket_bind_and_listen(*socket, addrinfo_res);
+    if (st != OK)
         return st;
+
     return OK;
 }
 
@@ -57,7 +64,8 @@ status_t init_sudoku(sudoku_t **sudoku) {
 
     fi = fopen(SUDOKU_FILE_PATH, "rt");
 
-    if ((st = sudoku_init(sudoku, fi)) != OK) {
+    st = sudoku_init(sudoku, fi);
+    if (st != OK) {
         if (fi != NULL)
             fclose(fi);
         return st;
@@ -70,7 +78,8 @@ status_t init_sudoku(sudoku_t **sudoku) {
 status_t destroy_server(server_t *server) {
     status_t st;
 
-    if ((st = socket_destroy(server->socket)) != OK)
+    st = socket_destroy(server->socket);
+    if (st != OK)
         return st;
 
     free(server->socket);
@@ -87,7 +96,8 @@ status_t receive_and_process(server_t *server) {
     char buffer[MAX_LENGTH_RECEIVED];
     bool connected = false;
 
-    if ((st = socket_accept(server->socket)) != OK) {
+    st = socket_accept(server->socket);
+    if (st != OK) {
         return st;
     }
 
@@ -100,14 +110,16 @@ status_t receive_and_process(server_t *server) {
         }
 
         if (!connected) {
-            if ((st = init_sudoku(&(server->sudoku))) != OK){
+            st = init_sudoku(&(server->sudoku));
+            if (st != OK){
                 socket_destroy((server->socket));
                 return st;
             }
             connected = true;
         }
 
-        if ((st = process_command_received(server, buffer)) != OK){
+        st = process_command_received(server, buffer);
+        if (st != OK){
             print_error_msg(st);
             return st;
         }
@@ -117,7 +129,8 @@ status_t receive_and_process(server_t *server) {
     }
 
     if (connected) {
-        if ((st = sudoku_destroy(server->sudoku)) != OK){
+        st = sudoku_destroy(server->sudoku);
+        if (st != OK){
             socket_destroy(server->socket);
             return st;
         }
@@ -143,8 +156,6 @@ status_t process_command_received(server_t *server, const char *buffer) {
 
 status_t process_get_command(server_t *server) {
     status_t st;
-
-    //printf("Processing GET command\n");
     char *printable;
     uint32_t max_table_send = htonl(LEN_MAX_SUDOKU_TABLE);
     char *size = (char *) &max_table_send;
@@ -187,16 +198,19 @@ status_t process_put_command(server_t *server, const char *buffer) {
         int32_t max_will_send = htonl(msg_size);
         char *size = (char *) &max_will_send;
 
-        if ((st = socket_send(server->socket, size, sizeof(max_will_send))) != OK)
+        st = socket_send(server->socket, size, sizeof(max_will_send));
+        if (st != OK)
             return st;
 
-        if ((st = socket_send(server->socket, msg, strlen(msg))) != OK)
+        st = socket_send(server->socket, msg, strlen(msg));
+        if (st != OK)
             return st;
 
         return OK;
 
     } else if (st == OK) {
-        if ((st = process_get_command(server)) != OK)
+        st = process_get_command(server);
+        if (st != OK)
             return st;
     }
 
@@ -206,11 +220,12 @@ status_t process_put_command(server_t *server, const char *buffer) {
 status_t process_reset_command(server_t *server) {
     status_t st;
 
-    //printf("Processing RESET command\n");
-
-    if(((st = sudoku_reset(server->sudoku)) != OK))
+    st = sudoku_reset(server->sudoku);
+    if (st != OK)
         return st;
-    if((st = process_get_command(server)) != OK)
+
+    st = process_get_command(server);
+    if (st != OK)
         return st;
 
     return OK;
@@ -218,7 +233,6 @@ status_t process_reset_command(server_t *server) {
 
 status_t process_verify_command(server_t *server) {
     status_t st;
-    //printf("Processing VERIFY command\n");
     unsigned long msg_size;
     int32_t max_will_send;
     char *size = (char *) &max_will_send;
@@ -228,10 +242,12 @@ status_t process_verify_command(server_t *server) {
     msg_size = strlen(msg);
     max_will_send = htonl(msg_size);
 
-    if ((st = socket_send(server->socket, size, sizeof(max_will_send))) != OK)
+    st = socket_send(server->socket, size, sizeof(max_will_send));
+    if (st != OK)
         return st;
 
-    if ((st = socket_send(server->socket, msg, strlen(msg))) != OK)
+    st = socket_send(server->socket, msg, strlen(msg));
+    if (st != OK)
         return st;
 
     return OK;
