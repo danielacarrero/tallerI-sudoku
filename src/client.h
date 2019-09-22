@@ -3,7 +3,7 @@
 
 #include "types.h"
 #include "errors.h"
-#include "adt_socket.h"
+#include "socket.h"
 
 #define CMD_MAX_INPUT_SIZE 15
 

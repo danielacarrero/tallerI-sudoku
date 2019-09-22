@@ -6,6 +6,7 @@
 
 status_t init_client(const char *host, const char *service) {
     client_t *client;
+    struct addrinfo *addrinfo_res;
     status_t st;
 
     if ((client = (client_t*)malloc(sizeof(client_t))) == NULL)
@@ -17,11 +18,9 @@ status_t init_client(const char *host, const char *service) {
     client->socket->host = host;
     client->socket->service = service;
 
-    if ((st = ADT_socket_init(client->socket, CLIENT)) != OK) {
-        return st;
-    }
+    addrinfo_res = socket_init(client->socket, CLIENT);
 
-    if ((st = ADT_socket_connect(client->socket)) != OK) {
+    if ((st = socket_connect(client->socket, addrinfo_res)) != OK) {
         return st;
     }
 
@@ -37,7 +36,7 @@ status_t init_client(const char *host, const char *service) {
 status_t destroy_client(client_t *client) {
     status_t st;
 
-    st = ADT_socket_destroy(client->socket);
+    st = socket_destroy(client->socket);
 
     free(client->socket);
     client->socket = NULL;
@@ -86,7 +85,7 @@ status_t process_command(client_t *client, char *buf) {
 status_t process_get(client_t *client) {
     status_t st;
 
-    if((st = ADT_socket_send(client->socket, SERVER_CMD_GET, sizeof(SERVER_CMD_GET))) != OK)
+    if((st = socket_send(client->socket, SERVER_CMD_GET, sizeof(SERVER_CMD_GET))) != OK)
         return st;
 
     if((st = receive(client)) != OK)
@@ -98,7 +97,7 @@ status_t process_get(client_t *client) {
 status_t process_verify(client_t *client) {
     status_t st;
 
-    if ((st = ADT_socket_send(client->socket, SERVER_CMD_VERIFY, sizeof(SERVER_CMD_VERIFY))) != OK)
+    if ((st = socket_send(client->socket, SERVER_CMD_VERIFY, sizeof(SERVER_CMD_VERIFY))) != OK)
         return st;
 
     if ((st = receive(client)) != OK)
@@ -111,7 +110,7 @@ status_t process_verify(client_t *client) {
 status_t process_reset(client_t *client) {
     status_t st;
 
-    if ((st = ADT_socket_send(client->socket, SERVER_CMD_RESET, sizeof(SERVER_CMD_RESET))) != OK)
+    if ((st = socket_send(client->socket, SERVER_CMD_RESET, sizeof(SERVER_CMD_RESET))) != OK)
         return st;
 
     if ((st = receive(client)) != OK)
@@ -163,7 +162,7 @@ status_t process_put(client_t *client, const char *buffer) {
     msg[2] = ((char *) &col)[0];
     msg[3] = ((char * ) &value)[0];
 
-    if ((st = ADT_socket_send(client->socket, msg, SERVER_MAX_PUT_LEN)) != OK)
+    if ((st = socket_send(client->socket, msg, SERVER_MAX_PUT_LEN)) != OK)
         return st;
 
     if ((st = receive(client)) != OK)
@@ -192,10 +191,10 @@ status_t receive(client_t *client) {
     long next_read_len;
     int32_t buff_len;
 
-    if ((st = ADT_socket_receive(client->socket,
-            client->socket->file_descriptor, &res,
-            (char *) &buff_len, sizeof(buff_len),
-            sizeof(buff_len))) == OK) {
+    if ((st = socket_receive(client->socket,
+                             client->socket->file_descriptor, &res,
+                             (char *) &buff_len, sizeof(buff_len),
+                             sizeof(buff_len))) == OK) {
 
         next_read_len = ntohl(buff_len);
         if((next_buffer = (char *) malloc((next_read_len + 2) * sizeof(char))) == NULL)
@@ -203,9 +202,9 @@ status_t receive(client_t *client) {
 
         memset(next_buffer, 0, next_read_len + 2);
 
-        if ((st = ADT_socket_receive(client->socket,
-                client->socket->file_descriptor, &next_res,
-                next_buffer, next_read_len, next_read_len)) != OK) {
+        if ((st = socket_receive(client->socket,
+                                 client->socket->file_descriptor, &next_res,
+                                 next_buffer, next_read_len, next_read_len)) != OK) {
             return st;
         }
         next_buffer[next_res + 1] = '\0';
