@@ -27,8 +27,7 @@ status_t init_client(const char *host, const char *service) {
 
     process_input(client);
 
-    //TODO: encapsular todo en un solo destroy, liberar memoria de socket y client
-    if ((st = ADT_socket_destroy(client->socket)) != OK) {
+    if ((st = destroy_client(client)) != OK) {
         return st;
     }
 
@@ -44,7 +43,7 @@ status_t destroy_client(client_t *client) {
     client->socket = NULL;
     free(client);
     client = NULL;
-    
+
     return st;
 }
 
